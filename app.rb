@@ -10,18 +10,19 @@ DB = Sequel.connect("sqlite://turn_and_burn.db")
 #   Integer :pin_number, unique: true, null: false
 #   DateTime :cycle_start, null: false
 # end
+# Logging + config:
 Logger.class_eval { alias_method :write, :<< }
 access_log = File.join(File.dirname(File.expand_path(__FILE__)), "log", "access.log")
 ACCESS_LOGGER = Logger.new(access_log)
 error_logger = File.new(File.join(File.dirname(File.expand_path(__FILE__)), "log", "error.log"), "a+")
 error_logger.sync = true
-configure do
-  use ::Rack::CommonLogger, ACCESS_LOGGER
-end
 before {
   env["rack.errors"] = error_logger
 }
-set :active_schedules, {}
+configure do
+  use ::Rack::CommonLogger, ACCESS_LOGGER
+  set :active_schedules, {}
+end
 
 class Pump < Sequel::Model(:pumps)
   def add_watering_event(start_time, gallon_percentage)
@@ -31,13 +32,13 @@ class Pump < Sequel::Model(:pumps)
     duration_in_seconds = (gallon_percentage / 4) * 3600
     ACCESS_LOGGER.info "Schedule next watering to start at #{start_time}, and run for " \
       "#{duration_in_seconds} seconds"
-    active_schedules[pin_number] = Rufus::Scheduler.new
-    active_schedules[pin_number].at start_time do
+    settings.active_schedules[pin_number] = Rufus::Scheduler.new
+    settings.active_schedules[pin_number].at start_time do
       ACTIVE_PINS[pin_number].set_value(HIGH)
     end
-    active_schedules[pin_number].at(start_time + duration_in_seconds) do
+    settings.active_schedules[pin_number].at(start_time + duration_in_seconds) do
       ACTIVE_PINS[pin_number].set_value(LOW)
-      active_schedules[pin_number].shutdown
+      settings.active_schedules[pin_number].shutdown
     end
   end
 
@@ -123,14 +124,14 @@ end
 
 put "/:id" do
   pump = Pump.where(id: params[:id]).first
-  active_schedules[pump.pin_number]&.shutdown
+  settings.active_schedules[pump.pin_number]&.shutdown
   pump.update(cycle_start: params[:cycle_start])
   redirect to("/")
 end
 
 delete "/:id" do
   pump = Pump.where(id: params[:id]).first
-  active_schedules[pump.pin_number]&.shutdown
+  settings.active_schedules[pump.pin_number]&.shutdown
   pump.delete
   redirect to("/")
 end
