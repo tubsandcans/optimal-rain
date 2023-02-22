@@ -1,0 +1,18 @@
+%h1 Turn and Burn runner
+
+- new_pumps.each do |new_pump|
+  %h4= "New turn and burn cycle for pin #{new_pump}:"
+  %form{id: "new_cycle_form", method: "POST", action: "/"}
+    %span Cycle Start
+    %input{type: "hidden", name: "pin_number", value: new_pump}
+    %input{type: "text", name: "cycle_start"}
+    %button{type: "submit"} Set Cycle
+- pumps.each do |pump|
+  %form{id: "new_cycle_form", method: "POST", action: "/#{pump.id}"}
+    %span Cycle Start
+    %input{type: "hidden", name: "_method", value: "put"}
+    %input{type: "text", name: "cycle_start", value: pump.cycle_start}
+    %button{type: "submit"} Change Cycle
+  %form{id: "remove_cycle_#{pump.id}", method: "POST", action: "/#{pump.id}"}
+    %input{type: "hidden", name: "_method", value: "delete"}
+    %button{type: "submit"} Remove

@@ -1,0 +1,85 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ast (2.4.2)
+    concurrent-ruby (1.2.0)
+    et-orbi (1.2.7)
+      tzinfo
+    fugit (1.8.1)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
+    haml (6.1.1)
+      temple (>= 0.8.2)
+      thor
+      tilt
+    json (2.6.3)
+    language_server-protocol (3.17.0.3)
+    mustermann (3.0.0)
+      ruby2_keywords (~> 0.0.1)
+    nio4r (2.5.8)
+    parallel (1.22.1)
+    parser (3.2.1.0)
+      ast (~> 2.4.1)
+    puma (6.1.0)
+      nio4r (~> 2.0)
+    raabro (1.4.0)
+    rack (2.2.6.2)
+    rack-protection (3.0.5)
+      rack
+    rainbow (3.1.1)
+    raspi-gpio (1.0.1)
+    regexp_parser (2.7.0)
+    rexml (3.2.5)
+    rubocop (1.44.1)
+      json (~> 2.3)
+      parallel (~> 1.10)
+      parser (>= 3.2.0.0)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.24.1, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.26.0)
+      parser (>= 3.2.1.0)
+    rubocop-performance (1.15.2)
+      rubocop (>= 1.7.0, < 2.0)
+      rubocop-ast (>= 0.4.0)
+    ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.5)
+    rufus-scheduler (3.8.2)
+      fugit (~> 1.1, >= 1.1.6)
+    sequel (5.65.0)
+    sinatra (3.0.5)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.0.5)
+      tilt (~> 2.0)
+    sqlite3 (1.6.0-x86_64-darwin)
+    standard (1.24.3)
+      language_server-protocol (~> 3.17.0.2)
+      rubocop (= 1.44.1)
+      rubocop-performance (= 1.15.2)
+    temple (0.10.0)
+    thor (1.2.1)
+    tilt (2.0.11)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
+    unicode-display_width (2.4.2)
+
+PLATFORMS
+  x86_64-darwin-21
+
+DEPENDENCIES
+  haml
+  puma
+  raspi-gpio (~> 1.0)
+  rubocop
+  rufus-scheduler
+  sequel
+  sinatra
+  sqlite3
+  standard
+
+BUNDLED WITH
+   2.4.7
