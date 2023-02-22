@@ -45,6 +45,62 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="et-orbi (vbundled(1.2.7)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/et-orbi-1.2.7/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/et-orbi-1.2.7/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="fugit (vbundled(1.8.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/fugit-1.8.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/fugit-1.8.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="haml (vbundled(6.1.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/exe" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/ext" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/exe" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/ext" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/exe" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/ext" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/haml-6.1.1/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="language_server-protocol (vbundled(3.17.0.3)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -173,6 +229,20 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="raabro (vbundled(1.4.0)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/raabro-1.4.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/raabro-1.4.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="rack (vbundled(2.2.6.2)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -195,6 +265,20 @@
           <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rack-2.2.6.2/contrib" />
           <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rack-2.2.6.2/example" />
         </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rack-protection (vbundled(3.0.5)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rack-protection-3.0.5/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rack-protection-3.0.5/lib" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -327,6 +411,20 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="rufus-scheduler (vbundled(3.8.2)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rufus-scheduler-3.8.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rufus-scheduler-3.8.2/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="sequel (vbundled(5.65.0)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -345,6 +443,25 @@
         <excluded>
           <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/sequel-5.65.0/bin" />
           <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/sequel-5.65.0/doc" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sinatra (vbundled(3.0.5)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/sinatra-3.0.5/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/sinatra-3.0.5/examples" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/sinatra-3.0.5/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/sinatra-3.0.5/examples" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/sinatra-3.0.5/examples" />
         </excluded>
       </library>
     </orderEntry>
@@ -461,6 +578,20 @@
         <excluded>
           <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/tilt-2.0.11/bin" />
         </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="tzinfo (vbundled(2.0.6)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/tzinfo-2.0.6/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/tzinfo-2.0.6/lib" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
