@@ -1,7 +1,4 @@
-require "raspi-gpio"
-require "rufus-scheduler"
 require "sinatra"
-require "sequel"
 
 class App < Sinatra::Application
   get "/" do

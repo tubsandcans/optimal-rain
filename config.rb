@@ -1,4 +1,5 @@
 require "logger"
+require "sequel"
 require_relative "app"
 require_relative "models/pump"
 

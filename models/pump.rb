@@ -1,4 +1,5 @@
-# frozen_string_literal: true
+require "raspi-gpio"
+require "rufus-scheduler"
 
 if Sinatra::Application.environment == :test
   Sequel.connect("sqlite://turn_and_burn_test.db")
