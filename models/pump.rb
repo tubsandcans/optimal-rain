@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-Sequel.connect("sqlite://turn_and_burn.db")
+if Sinatra::Application.environment == :test
+  Sequel.connect("sqlite://turn_and_burn_test.db")
+else
+  Sequel.connect("sqlite://turn_and_burn.db")
+end
 
 class Pump < Sequel::Model(:pumps)
   # add_watering_event - schedules Pump.pin_number to send HIGH signal at start_time

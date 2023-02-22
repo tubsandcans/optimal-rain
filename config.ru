@@ -1,4 +1,4 @@
-require_relative "./config.rb"
+require_relative "./config"
 require_relative "models/pump"
 
 error_logger = TurnAndBurnRunner::ERROR_LOGGER

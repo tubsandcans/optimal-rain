@@ -45,6 +45,75 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="database_cleaner-core (vbundled(2.0.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-core-2.0.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-core-2.0.1/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-core-2.0.1/tmp" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-core-2.0.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-core-2.0.1/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-core-2.0.1/tmp" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-core-2.0.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-core-2.0.1/tmp" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="database_cleaner-sequel (vbundled(2.0.2)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-sequel-2.0.2/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-sequel-2.0.2/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-sequel-2.0.2/tmp" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-sequel-2.0.2/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-sequel-2.0.2/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-sequel-2.0.2/tmp" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-sequel-2.0.2/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/database_cleaner-sequel-2.0.2/tmp" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="diff-lcs (vbundled(1.5.0)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/docs" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/spec" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/docs" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/spec" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/docs" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/diff-lcs-1.5.0/spec" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="et-orbi (vbundled(1.2.7)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -282,6 +351,20 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="rack-test (vbundled(2.0.2)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rack-test-2.0.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rack-test-2.0.2/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="rackup (vbundled(1.0.0)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -354,6 +437,81 @@
         <excluded>
           <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rexml-3.2.5/doc" />
         </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rspec (vbundled(3.12.0)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-3.12.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-3.12.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rspec-core (vbundled(3.12.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-core-3.12.1/exe" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-core-3.12.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-core-3.12.1/exe" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-core-3.12.1/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-core-3.12.1/exe" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rspec-expectations (vbundled(3.12.2)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-expectations-3.12.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-expectations-3.12.2/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rspec-mocks (vbundled(3.12.3)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-mocks-3.12.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-mocks-3.12.3/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rspec-support (vbundled(3.12.0)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-support-3.12.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rspec-support-3.12.0/lib" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">

@@ -13,3 +13,9 @@ group :development, :test do
   gem "rubocop"
   gem "standard"
 end
+
+group :test do
+  gem "database_cleaner-sequel"
+  gem "rack-test"
+  gem "rspec"
+end
