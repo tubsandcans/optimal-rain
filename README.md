@@ -9,6 +9,8 @@ This is currently in extreme-prototype phase, aiming at achieveing the most basi
   * This should at some point allow for other container sizes. 
 
 #### Setup
+Make sure sqlite3 is installed, then `bundle install`
+##### Create database file and migrate:
 `sqlite3 turn_and_burn.db`
 ~~~
 require 'sequel'
@@ -20,3 +22,5 @@ DB.create_table :pumps do
   DateTime :cycle_start, null: false
 end
 ~~~
+#### Add crontab entry to always run at startup:
+`@reboot sh /home/pi/turn_and_burn_runner/startup.sh`
