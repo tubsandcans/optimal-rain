@@ -6,6 +6,7 @@ gem "sinatra"
 gem "sqlite3"
 gem "raspi-gpio", "~> 1.0"
 gem "haml"
+gem "rackup"
 gem "rufus-scheduler"
 
 group :development, :test do

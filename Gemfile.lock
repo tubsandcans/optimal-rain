@@ -26,6 +26,9 @@ GEM
     rack (2.2.6.2)
     rack-protection (3.0.5)
       rack
+    rackup (1.0.0)
+      rack (< 3)
+      webrick
     rainbow (3.1.1)
     raspi-gpio (1.0.1)
     regexp_parser (2.7.0)
@@ -66,6 +69,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
+    webrick (1.8.1)
 
 PLATFORMS
   x86_64-darwin-21
@@ -73,6 +77,7 @@ PLATFORMS
 DEPENDENCIES
   haml
   puma
+  rackup
   raspi-gpio (~> 1.0)
   rubocop
   rufus-scheduler
