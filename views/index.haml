@@ -13,4 +13,4 @@
     %button{type: "submit"} Change Cycle
   %form{id: "remove_cycle_#{pump.id}", method: "POST", action: "/#{pump.id}"}
     %input{type: "hidden", name: "_method", value: "delete"}
-    %button{type: "submit"} Remove
+    %button.remove{type: "submit"} Remove
