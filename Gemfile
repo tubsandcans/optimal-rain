@@ -7,6 +7,7 @@ gem "sqlite3"
 gem "raspi-gpio", "~> 1.0"
 gem "haml"
 gem "rackup"
+gem "rake", "~> 13.0"
 gem "rufus-scheduler"
 
 group :development, :test do

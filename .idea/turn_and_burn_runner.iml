@@ -393,6 +393,28 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="rake (vbundled(13.0.6)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rake-13.0.6/doc" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rake-13.0.6/exe" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rake-13.0.6/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rake-13.0.6/doc" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rake-13.0.6/exe" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rake-13.0.6/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rake-13.0.6/doc" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/rake-13.0.6/exe" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="raspi-gpio (vbundled(1.0.1)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -801,5 +823,19 @@
     </orderEntry>
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.4.7, rbenv: 3.2.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="json (v2.6.3, rbenv: 3.2.1) [gem]" level="application" />
+  </component>
+  <component name="RakeTasksCache">
+    <option name="myRootTask">
+      <RakeTaskImpl id="rake">
+        <subtasks>
+          <RakeTaskImpl id="db">
+            <subtasks>
+              <RakeTaskImpl description="Run migrations" fullCommand="db:migrate[version]" id="migrate[version]" />
+              <RakeTaskImpl description="" fullCommand="db:migrate" id="migrate" />
+            </subtasks>
+          </RakeTaskImpl>
+        </subtasks>
+      </RakeTaskImpl>
+    </option>
   </component>
 </module>
