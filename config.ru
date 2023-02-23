@@ -1,10 +1,9 @@
 require_relative "./config"
 require_relative "models/pump"
 
-error_logger = TurnAndBurnRunner::ERROR_LOGGER
 before {
-  env["rack.errors"] = error_logger
+  env["rack.errors"] = TurnAndBurnRunner::ERROR_LOGGER
 }
 use ::Rack::CommonLogger, TurnAndBurnRunner::ACCESS_LOGGER
-set :error_logger, error_logger
 run TurnAndBurnRunner.app
+Pump.all.map(&:next_watering)
