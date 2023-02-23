@@ -12,6 +12,31 @@
     <orderEntry type="jdk" jdkName="rbenv: 3.2.1" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
+      <library name="addressable (vbundled(2.8.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/data" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/spec" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/tasks" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/data" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/spec" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/tasks" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/data" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/spec" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/addressable-2.8.1/tasks" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="ast (vbundled(2.4.2)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -23,6 +48,25 @@
         <SOURCES>
           <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/ast-2.4.2/lib" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="capybara (vbundled(3.38.0)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/capybara-3.38.0/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/capybara-3.38.0/spec" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/capybara-3.38.0/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/capybara-3.38.0/spec" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/capybara-3.38.0/spec" />
+        </excluded>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -184,6 +228,45 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="matrix (vbundled(0.4.2)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/matrix-0.4.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/matrix-0.4.2/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mini_mime (vbundled(1.1.2)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/bench" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/bench" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/bench" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/mini_mime-1.1.2/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="mustermann (vbundled(3.0.0)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -237,6 +320,31 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="nokogiri (vbundled(1.14.2)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/ext" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/gumbo-parser" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/ext" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/gumbo-parser" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/ext" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/nokogiri-1.14.2-x86_64-darwin/gumbo-parser" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="parallel (vbundled(1.22.1)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -266,6 +374,34 @@
         </SOURCES>
         <excluded>
           <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/parser-3.2.1.0/bin" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="public_suffix (vbundled(5.0.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/data" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/test" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/data" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/test" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/bin" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/data" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/test" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/public_suffix-5.0.1/.github" />
         </excluded>
       </library>
     </orderEntry>
@@ -821,8 +957,28 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xpath (vbundled(3.2.0)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/xpath-3.2.0/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/xpath-3.2.0/spec" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/xpath-3.2.0/lib" />
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/xpath-3.2.0/spec" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/bundled_gems/ruby/3.2.0/gems/xpath-3.2.0/spec" />
+        </excluded>
+      </library>
+    </orderEntry>
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.4.7, rbenv: 3.2.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="json (v2.6.3, rbenv: 3.2.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="racc (v1.6.2, rbenv: 3.2.1) [gem]" level="application" />
   </component>
   <component name="RakeTasksCache">
     <option name="myRootTask">

@@ -16,6 +16,7 @@ group :development, :test do
 end
 
 group :test do
+  gem "capybara"
   gem "database_cleaner-sequel"
   gem "rack-test"
   gem "rspec"

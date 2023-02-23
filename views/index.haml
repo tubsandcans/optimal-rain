@@ -1,12 +1,12 @@
 - new_pumps.each do |new_pump|
-  %h4= "New turn and burn cycle for pin #{new_pump}:"
+  %h4= "New turn and burn cycle for pin #{new_pump}"
   %form{id: "new_cycle_form", method: "POST", action: "/"}
-    %span Cycle Start
+    %label Cycle start-time
     %input{type: "hidden", name: "pin_number", value: new_pump}
     %input.cycle-start{type: "text", name: "cycle_start"}
     %button{type: "submit"} Set Cycle
 - pumps.each do |pump|
-  %form{id: "new_cycle_form", method: "POST", action: "/#{pump.id}"}
+  %form{id: "cycle_form", method: "POST", action: "/#{pump.id}"}
     %span Cycle Start
     %input{type: "hidden", name: "_method", value: "put"}
     %input.cycle-start{type: "text", name: "cycle_start", value: pump.cycle_start}
