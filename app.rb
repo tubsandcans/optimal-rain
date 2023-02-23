@@ -30,4 +30,16 @@ __END__
 
 @@ layout
 %html
-  != yield
+  %head
+    %meta{charset: "UTF-8"}
+    %meta{"http-equiv": "X-UA-Compatible", content: "IE=edge"}
+    %meta{name: "viewport", content: "width=device-width", "initial-scale": 1.0}
+    %link{rel: "stylesheet", href: "https://cdn.simplecss.org/simple.min.css"}
+    %link{rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"}
+    %script{src: "https://cdn.jsdelivr.net/npm/flatpickr"}
+    %title Turn and Burn
+  %body{onload: "flatpickr('.cycle-start', {enableTime: true});"}
+    %header
+      %h1 Turn and Burn runner
+    %main
+      != yield
