@@ -94,8 +94,7 @@ class TurnAndBurnRunner::Pump < Sequel::Model(:pumps)
         new_time += (20 * 60)
       end
     else
-      TurnAndBurnRunner::ACTIVE_SCHEDULES[pin_number].shutdown
-      TurnAndBurnRunner::ACTIVE_SCHEDULES[pin_number] = nil
+      TurnAndBurnRunner::ACTIVE_SCHEDULES[pin_number].cancel
       TurnAndBurnRunner::ACCESS_LOGGER.info "Cycle complete, done watering!"
       return
     end

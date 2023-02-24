@@ -14,13 +14,11 @@ class TurnAndBurnRunner::Watering
 
   def begin_watering_event
     if @scheduler.jobs.empty?
-      @scheduler.at @start_time do
-        @gpio_pin.set_value(HIGH)
-      end
-      @scheduler.at(@start_time + duration_in_seconds) do
-        @gpio_pin.set_value(LOW)
-        @scheduler.shutdown
-        @pump.next_watering
+      begin
+        set_schedule
+      rescue Rufus::Scheduler::NotRunningError => e
+        @schedule = Rufus::Scheduler.new
+        set_schedule
       end
     end
     @scheduler.jobs.first&.original
@@ -36,7 +34,21 @@ class TurnAndBurnRunner::Watering
     ((@volume_percentage * @volume) / 4) * 60 * 60
   end
 
-  def shutdown
-    @scheduler.shutdown
+  def cancel
+    @scheduler.jobs.map { @scheduler.unschedule(_1) }
+    TurnAndBurnRunner::ACTIVE_SCHEDULES[@pump.pin_number] = nil
+  end
+
+  private
+
+  def set_schedule
+    @scheduler.at @start_time do
+      @gpio_pin.set_value(HIGH)
+    end
+    @scheduler.at(@start_time + duration_in_seconds) do
+      @gpio_pin.set_value(LOW)
+      @scheduler.shutdown
+      @pump.next_watering
+    end
   end
 end

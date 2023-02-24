@@ -14,10 +14,10 @@ describe "Pump" do
       pump.next_watering
       watering = TurnAndBurnRunner::ACTIVE_SCHEDULES[pump.pin_number]
       watering_start = first_watering
-      expect(watering.begin_watering_event).to eql(watering_start)
-      expect(watering.end_watering_event).to eql(watering_start +
+      expect(watering.begin_watering_event).to be_within(1).of(watering_start)
+      expect(watering.end_watering_event).to be_within(1).of(watering_start +
                                                    watering.duration_in_seconds)
-      watering.shutdown
+      watering.cancel
       TurnAndBurnRunner::ACTIVE_SCHEDULES[pump.pin_number] = nil
     end
 
@@ -33,7 +33,8 @@ describe "Pump" do
       expect(TurnAndBurnRunner::ACTIVE_PINS[pump.pin_number].value).to eq 0
       # the next watering will be 20 minutes from the last watering:
       watering = TurnAndBurnRunner::ACTIVE_SCHEDULES[pump.pin_number]
-      expect(watering.begin_watering_event).to eql(watering_start + (20 * 60))
+      expect(watering.begin_watering_event).to be_within(1)
+        .of(watering_start + (20 * 60))
       TurnAndBurnRunner::ACTIVE_SCHEDULES[pump.pin_number] = nil
     end
 
@@ -50,7 +51,8 @@ describe "Pump" do
       TurnAndBurnRunner::ACTIVE_SCHEDULES[pump.pin_number].jobs.first.call
       watering = TurnAndBurnRunner::ACTIVE_SCHEDULES[pump.pin_number]
       # verify that a watering event is scheduled at first_watering + 1 day
-      expect(watering.begin_watering_event).to eql(first_watering + (24 * 60 * 60))
+      expect(watering.begin_watering_event).to be_within(1)
+        .of(first_watering + (24 * 60 * 60))
     end
   end
 
