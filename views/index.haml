@@ -6,8 +6,13 @@
     %input.cycle-start{type: "text", name: "cycle_start"}
     %button{type: "submit"} Set Cycle
 - pumps.each do |pump|
+  - schedule = TurnAndBurnRunner::ACTIVE_SCHEDULES[pump.pin_number]
+  - if schedule.nil?
+    %p This cycle has ended, no future watering events.
+  - else
+    %p <b>Next watering:</b> <em>#{schedule.begin_watering_event.strftime('%B %d %I:%M %p')} for #{schedule.duration_in_seconds.round} seconds</em>
   %form{id: "cycle_form", method: "POST", action: "/#{pump.id}"}
-    %span Cycle Start
+    %b Cycle Start
     %input{type: "hidden", name: "_method", value: "put"}
     %input.cycle-start{type: "text", name: "cycle_start", value: pump.cycle_start}
     %button{type: "submit"} Change Cycle
