@@ -6,4 +6,4 @@ before {
 }
 use ::Rack::CommonLogger, TurnAndBurnRunner::ACCESS_LOGGER
 run TurnAndBurnRunner.app
-Pump.all.map(&:next_watering)
+TurnAndBurnRunner::Pump.all.map(&:next_watering)
