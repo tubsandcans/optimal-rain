@@ -12,7 +12,7 @@ require_relative "models/watering"
 
 Logger.class_eval { alias_method :write, :<< }
 
-module TurnAndBurnRunner
+module OptimalRain
   # MockGPIO is necessary for running outside of raspberry-pi environment.
   class MockGPIO
     attr_accessor :value

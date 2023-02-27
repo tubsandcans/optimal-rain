@@ -1,7 +1,7 @@
 require "raspi-gpio"
 require "rufus-scheduler"
 
-class TurnAndBurnRunner::Pump < Sequel::Model(:pumps)
+class OptimalRain::Pump < Sequel::Model(:pumps)
   # add_watering_event - schedules Pump.pin_number to send HIGH signal at start_time
   #  if start_time is in the future. Also schedules Pump.pin_number to send LOW signal
   #  at start_time + duration, after which the schedule for the watering is shut down
@@ -10,27 +10,27 @@ class TurnAndBurnRunner::Pump < Sequel::Model(:pumps)
     return false if start_time < Time.now
 
     duration_in_seconds = (gallon_percentage / 4) * 60 * 60
-    TurnAndBurnRunner::ACCESS_LOGGER.info(
+    OptimalRain::ACCESS_LOGGER.info(
       "Schedule next watering to start at #{start_time}, and run for " \
       "#{duration_in_seconds} seconds"
     )
-    next_watering_event = TurnAndBurnRunner::Watering.new(
+    next_watering_event = OptimalRain::Watering.new(
       pump: self,
-      gpio_pin: TurnAndBurnRunner::ACTIVE_PINS[pin_number],
+      gpio_pin: OptimalRain::ACTIVE_PINS[pin_number],
       start_time: start_time,
       scheduler: Rufus::Scheduler.new,
       volume_percentage: gallon_percentage
     )
     next_watering_event.begin_watering_event
-    TurnAndBurnRunner::ACTIVE_SCHEDULES[pin_number] = next_watering_event
+    OptimalRain::ACTIVE_SCHEDULES[pin_number] = next_watering_event
   end
 
   # next_watering - determines the next watering event for the current day.
   #   if there is an event, schedule it (add_watering_event) and return.
   #   if there is NOT an event, schedule to run the next day at light-on time.
   def next_watering
-    TurnAndBurnRunner::ACCESS_LOGGER.info "Starting cycle for pin #{pin_number}"
-    TurnAndBurnRunner::ACTIVE_PINS[pin_number].set_mode(OUT)
+    OptimalRain::ACCESS_LOGGER.info "Starting cycle for pin #{pin_number}"
+    OptimalRain::ACTIVE_PINS[pin_number].set_mode(OUT)
     days_elapsed = (Time.now - cycle_start).to_i / (24 * 60 * 60)
     new_time = cycle_start.dup
     new_time += days_elapsed * (24 * 60 * 60)
@@ -94,19 +94,19 @@ class TurnAndBurnRunner::Pump < Sequel::Model(:pumps)
         new_time += (20 * 60)
       end
     else
-      TurnAndBurnRunner::ACTIVE_SCHEDULES[pin_number].cancel
-      TurnAndBurnRunner::ACCESS_LOGGER.info "Cycle complete, done watering!"
+      OptimalRain::ACTIVE_SCHEDULES[pin_number].cancel
+      OptimalRain::ACCESS_LOGGER.info "Cycle complete, done watering!"
       return
     end
 
     # no watering event was added, check again tomorrow at light-on time:
     tomorrow_light_on = cycle_start + ((days_elapsed + 1) * 24 * 60 * 60)
-    TurnAndBurnRunner::ACCESS_LOGGER.info "Going to check if tomorrow " \
+    OptimalRain::ACCESS_LOGGER.info "Going to check if tomorrow " \
       "(#{tomorrow_light_on}) has any watering events"
     try_tomorrow = Rufus::Scheduler.new
     try_tomorrow.at(tomorrow_light_on) do
       next_watering
     end
-    TurnAndBurnRunner::ACTIVE_SCHEDULES[pin_number] = try_tomorrow
+    OptimalRain::ACTIVE_SCHEDULES[pin_number] = try_tomorrow
   end
 end

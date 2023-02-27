@@ -1,6 +1,6 @@
 require "sinatra"
 
-module TurnAndBurnRunner
+module OptimalRain
   class App < Sinatra::Application
     get "/" do
       new_pumps = ACTIVE_PINS.keys - Pump.all.map(&:pin_number)

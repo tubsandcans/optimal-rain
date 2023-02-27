@@ -6,7 +6,7 @@ require_relative "../config"
 describe "App" do
   include Capybara::DSL
 
-  let(:app) { TurnAndBurnRunner.app }
+  let(:app) { OptimalRain.app }
 
   before do
     Capybara.app = app

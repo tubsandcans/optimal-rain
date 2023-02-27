@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TurnAndBurnRunner::Watering
+class OptimalRain::Watering
   attr_accessor :scheduler
 
   def initialize(pump:, gpio_pin:, start_time:, scheduler:, volume_percentage:, volume: 1)
@@ -36,7 +36,7 @@ class TurnAndBurnRunner::Watering
 
   def cancel
     @scheduler.jobs.map { @scheduler.unschedule(_1) }
-    TurnAndBurnRunner::ACTIVE_SCHEDULES[@pump.pin_number] = nil
+    OptimalRain::ACTIVE_SCHEDULES[@pump.pin_number] = nil
   end
 
   private

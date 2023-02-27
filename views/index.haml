@@ -6,7 +6,7 @@
     %input.cycle-start{type: "text", name: "cycle_start"}
     %button{type: "submit"} Set Cycle
 - pumps.each do |pump|
-  - schedule = TurnAndBurnRunner::ACTIVE_SCHEDULES[pump.pin_number]
+  - schedule = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
   - if schedule.nil?
     %p This cycle has ended, no future watering events.
   - else
