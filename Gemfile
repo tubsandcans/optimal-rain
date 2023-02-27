@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby "~> 3.2.1"
+
 gem "puma"
 gem "sequel"
 gem "sinatra"
@@ -11,7 +13,7 @@ gem "rake", "~> 13.0"
 gem "rufus-scheduler"
 
 group :development, :test do
-  gem "rubocop"
+  gem "rubocop", "1.44.1"
   gem "standard"
 end
 
