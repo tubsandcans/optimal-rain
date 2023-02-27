@@ -1,2 +1,2 @@
-cd /home/pi/optimal_rain
+cd /home/pi/optimal-rain
 APP_ENV=production bundle exec rackup

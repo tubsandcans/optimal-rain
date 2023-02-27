@@ -21,4 +21,4 @@ Make sure sqlite3 is installed
 
 #### Add crontab entry to always run at startup:
 
-`@reboot sh /home/pi/optimal_rain/startup.sh`
+`@reboot sh /home/pi/optimal-rain/startup.sh`
