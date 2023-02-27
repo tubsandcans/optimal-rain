@@ -1,2 +1,2 @@
-cd /home/pi/turn_and_burn_runner
+cd /home/pi/optimal_rain
 APP_ENV=production bundle exec rackup

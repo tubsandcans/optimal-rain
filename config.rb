@@ -3,9 +3,9 @@ require "sequel"
 require_relative "app"
 
 if Sinatra::Application.environment == :test
-  Sequel.connect("sqlite://turn_and_burn_test.db")
+  Sequel.connect("sqlite://optimal_rain_test.db")
 else
-  Sequel.connect("sqlite://turn_and_burn.db")
+  Sequel.connect("sqlite://optimal_rain.db")
 end
 require_relative "models/pump"
 require_relative "models/watering"

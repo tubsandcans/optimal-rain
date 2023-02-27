@@ -42,9 +42,9 @@ __END__
     %link{rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"}
     %link{rel: "stylesheet", href: "main.css"}
     %script{src: "https://cdn.jsdelivr.net/npm/flatpickr"}
-    %title Turn and Burn
+    %title Optimal Rain
   %body{onload: "flatpickr('.cycle-start', {enableTime: true});"}
     %header
-      %h1 Turn and Burn runner
+      %h1 Cycle runner
     %main
       != yield

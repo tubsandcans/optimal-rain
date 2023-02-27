@@ -1,5 +1,5 @@
 - new_pumps.each do |new_pump|
-  %h4= "New turn and burn cycle for pin #{new_pump}"
+  %h4= "New cycle for pin #{new_pump}"
   %form{id: "new_cycle_form", method: "POST", action: "/"}
     %label Cycle start-time
     %input{type: "hidden", name: "pin_number", value: new_pump}

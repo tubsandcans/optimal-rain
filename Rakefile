@@ -1,8 +1,8 @@
 namespace :db do
   database_url = if ENV.fetch("APP_ENV", "development") == "test"
-    "sqlite://turn_and_burn_test.db"
+    "sqlite://optimal_rain_test.db"
   else
-    "sqlite://turn_and_burn.db"
+    "sqlite://optimal_rain.db"
   end
   desc "Run migrations"
   task :migrate, [:version] do |t, args|
