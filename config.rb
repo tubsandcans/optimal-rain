@@ -31,12 +31,13 @@ module OptimalRain
   ERROR_LOGGER.sync = true
 
   ACTIVE_SCHEDULES = {}
-  mock_gpio = {17 => MockGPIO.new}
+  PUMP_PIN = 17
+  mock_gpio = {PUMP_PIN => MockGPIO.new}
   ACTIVE_PINS = if Sinatra::Application.environment == :test
     mock_gpio
   else
     begin
-      {17 => GPIO.new(17)}
+      {PUMP_PIN => GPIO.new(PUMP_PIN)}
     rescue Errno::ENOENT => _e
       mock_gpio
     end

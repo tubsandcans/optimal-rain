@@ -5,7 +5,7 @@ describe "Pump" do
   let(:first_watering) { start_time + (5 * 24 * 60 * 60) }
 
   before do
-    OptimalRain::Pump.insert(pin_number: 17, cycle_start: start_time)
+    OptimalRain::Pump.insert(pin_number: OptimalRain::PUMP_PIN, cycle_start: start_time)
   end
 
   context "when cycle-start is Time.now" do
