@@ -3,3 +3,5 @@ log/*.log
 TODO.md
 .idea
 *.code-workspace
+.app.rb.swp
+.vscode/launch.json
