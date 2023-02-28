@@ -45,10 +45,10 @@ describe "Pump" do
       pump.next_watering
       # stub Time.now to be the start-time of the job
       allow(Time).to receive(:now).and_return(
-        OptimalRain::ACTIVE_SCHEDULES[pump.pin_number].jobs.first.original
+        OptimalRain::ACTIVE_SCHEDULES[pump.pin_number].scheduler.jobs.first.original
       )
       # call the job (pump.next_watering) to create a Watering object for this pin
-      OptimalRain::ACTIVE_SCHEDULES[pump.pin_number].jobs.first.call
+      OptimalRain::ACTIVE_SCHEDULES[pump.pin_number].scheduler.jobs.first.call
       watering = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
       # verify that a watering event is scheduled at first_watering + 1 day
       expect(watering.begin_watering_event).to be_within(1)

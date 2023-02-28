@@ -3,9 +3,8 @@
 class OptimalRain::Watering
   attr_accessor :scheduler
 
-  def initialize(pump:, gpio_pin:, start_time:, scheduler:, volume_percentage:, volume: 1)
+  def initialize(pump:, start_time:, scheduler:, volume_percentage:, volume: 1)
     @pump = pump
-    @gpio_pin = gpio_pin
     @start_time = start_time
     @volume_percentage = volume_percentage
     @scheduler = scheduler
@@ -16,7 +15,7 @@ class OptimalRain::Watering
     if @scheduler.jobs.empty?
       begin
         set_schedule
-      rescue Rufus::Scheduler::NotRunningError => e
+      rescue Rufus::Scheduler::NotRunningError => _e
         @schedule = Rufus::Scheduler.new
         set_schedule
       end
@@ -42,11 +41,12 @@ class OptimalRain::Watering
   private
 
   def set_schedule
+    gpio_pin = OptimalRain::ACTIVE_PINS[@pump.pin_number]
     @scheduler.at @start_time do
-      @gpio_pin.set_value(HIGH)
+      gpio_pin.set_value(HIGH)
     end
     @scheduler.at(@start_time + duration_in_seconds) do
-      @gpio_pin.set_value(LOW)
+      gpio_pin.set_value(LOW)
       @scheduler.shutdown
       @pump.next_watering
     end
