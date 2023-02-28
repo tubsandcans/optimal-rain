@@ -29,7 +29,8 @@ class OptimalRain::Views::Index < Phlex::HTML
             b { "Next watering:" }
             em do
               schedule.begin_watering_event.strftime("%B %d %I:%M %p") +
-                " for #{schedule.duration_in_seconds.round} seconds"
+                " for #{schedule.duration_in_seconds.round} seconds " \
+                "(#{schedule.volume_in_ml}ml)"
             end
           end
         end

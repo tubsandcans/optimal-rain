@@ -33,6 +33,10 @@ class OptimalRain::Watering
     ((@volume_percentage * @volume) / 4) * 60 * 60
   end
 
+  def volume_in_ml
+    (@volume_percentage * @volume * 3785.41).round
+  end
+
   def cancel
     @scheduler.jobs.map { @scheduler.unschedule(_1) }
     OptimalRain::ACTIVE_SCHEDULES[@pump.pin_number] = nil
