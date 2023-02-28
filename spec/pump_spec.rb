@@ -28,9 +28,9 @@ describe "Pump" do
       allow(Time).to receive(:now).and_return(first_watering + 1)
       # trigger execution of jobs just like Rufus-scheduler would when triggered
       watering.scheduler.jobs.first.callable.call
-      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].value).to eq 1
+      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].get_value.to_i).to eq 1
       watering.scheduler.jobs.last.callable.call
-      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].value).to eq 0
+      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].get_value.to_i).to eq 0
       # the next watering will be 20 minutes from the last watering:
       watering = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
       expect(watering.begin_watering_event).to be_within(1)

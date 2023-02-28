@@ -15,9 +15,12 @@ Logger.class_eval { alias_method :write, :<< }
 module OptimalRain
   # MockGPIO is necessary for running outside of raspberry-pi environment.
   class MockGPIO
-    attr_accessor :value
     def set_value(signal)
       @value = signal
+    end
+
+    def get_value
+      @value
     end
 
     def set_mode(_direction) = true
