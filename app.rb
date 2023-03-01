@@ -11,13 +11,15 @@ module OptimalRain
     post "/" do
       redirect to("/") if params[:cycle_start].empty?
 
-      Pump.insert(pin_number: params[:pin_number], cycle_start: params[:cycle_start])
-      Pump.last.next_watering
+      new_pump_id = Pump.insert(
+        pin_number: params[:pin_number], cycle_start: params[:cycle_start]
+      )
+      Pump.first(id: new_pump_id).next_watering
       redirect to("/")
     end
 
     put "/:id" do
-      pump = Pump.where(id: params[:id]).first
+      pump = Pump.first(id: params[:id])
       ACTIVE_SCHEDULES[pump.pin_number]&.cancel
       pump.update(cycle_start: params[:cycle_start])
       pump.next_watering
@@ -25,7 +27,7 @@ module OptimalRain
     end
 
     delete "/:id" do
-      pump = Pump.where(id: params[:id]).first
+      pump = Pump.first(id: params[:id])
       ACTIVE_SCHEDULES[pump.pin_number]&.cancel
       pump.delete
       redirect to("/")
