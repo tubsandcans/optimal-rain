@@ -1,6 +1,6 @@
 require "logger"
 require "sequel"
-require_relative "app"
+require_relative "./app"
 
 if Sinatra::Application.environment == :test
   Sequel.connect("sqlite://optimal_rain_test.db")
