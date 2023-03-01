@@ -71,19 +71,19 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
       end
     when (cycle_start + (31 * 24 * 60 * 60))..(cycle_start + (52 * 24 * 60 * 60))
       # Bulking P2, days 31-52 (21-42)
-      new_time += (120 * 60)
+      new_time += (2 * 60 * 60)
       4.times do
         return if add_watering_event(start_time: new_time, from: from)
         new_time += (20 * 60)
       end
-      new_time += (150 * 60)
+      new_time += (2.5 * 60 * 60)
       4.times do
         return if add_watering_event(start_time: new_time, from: from)
-        new_time += (150 * 60)
+        new_time += (2.5 * 60 * 60)
       end
     when (cycle_start + (53 * 24 * 60 * 60))..(cycle_start + (63 * 24 * 60 * 60))
       # Late Bloom P1+P2, days 53-63 (P1:43-49, P2:50-53)
-      new_time += (120 * 60)
+      new_time += (2 * 60 * 60)
       7.times do
         return if add_watering_event(start_time: new_time, from: from)
         new_time += (20 * 60)
@@ -91,7 +91,7 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     when ((cycle_start + (64 * 24 * 60 * 60))..
       (cycle_start + (64 * 24 * 60 * 60) + (23 * 60 * 60)))
       # Flush, day 64 (54)
-      new_time += (120 * 60)
+      new_time += (2 * 60 * 60)
       15.times do
         return if add_watering_event(start_time: new_time, from: from)
         new_time += (20 * 60)
@@ -101,8 +101,6 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
       OptimalRain::ACTIVE_SCHEDULES[pin_number]&.cancel
       return
     end
-
-    return unless check_now
 
     # only executes here if currently outside the 24-hr period watering phase but within
     # the crop-cycle. This means the next earliest scheduled watering is tomorrow at
