@@ -1,3 +1,5 @@
+[![Ruby](https://github.com/tubsandcans/optimal-rain/actions/workflows/ruby.yml/badge.svg?branch=main)](https://github.com/tubsandcans/optimal-rain/actions/workflows/ruby.yml)
+
 ### Watering schedule throughout a crop's lifecycle with Raspberry Pi
 
 This is currently aimed at achieveing the most basic functionality. I only intend to use this with one pump simultaneously but the code is structured such that other pins could be used without having to make any drastic modifications. This is why the ACTIVE_PINS map only contains one GPIO value keyed to the PUMP_PIN constant (my in-use pin of #17).
