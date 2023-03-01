@@ -37,7 +37,7 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     new_time += days_elapsed * (24 * 60 * 60)
 
     case from
-    when cycle_start..(cycle_start + (5 * 24 * 60 * 60))
+    when ..(cycle_start + (5 * 24 * 60 * 60))
       # schedule the first watering of the cycle if current time
       # is before the first day of watering:
       add_watering_event(start_time: cycle_start + (5 * 24 * 60 * 60),

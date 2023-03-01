@@ -1,7 +1,7 @@
 require "rspec"
 
 describe "Pump" do
-  let(:start_time) { Time.now }
+  let(:start_time) { override_start || Time.now }
   let(:first_watering) { start_time + (5 * 24 * 60 * 60) }
 
   before do
@@ -9,6 +9,7 @@ describe "Pump" do
   end
 
   context "when cycle-start is Time.now" do
+    let(:override_start) { nil }
     let(:pump) { OptimalRain::Pump.last }
     it "schedules the first watering event 5 days out" do
       pump.next_watering
@@ -57,11 +58,23 @@ describe "Pump" do
   end
 
   context "when cycle start was 65 days ago (cycle is completed)" do
+    let(:override_start) { nil }
     let(:pump) { OptimalRain::Pump.last }
     it "is all out of watering events" do
       pump.cycle_start = start_time - (65 * 24 * 60 * 60)
       pump.next_watering
       expect(OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]).to be_nil
+    end
+  end
+
+  context "when cycle-start is in the future" do
+    let(:override_start) { Time.now + 2 * 24 * 60 * 60 }
+    let(:pump) { OptimalRain::Pump.last }
+    it "schedules the first watering event 5 days from cycle-start" do
+      pump.next_watering
+      first_watering_start = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
+        .scheduler.jobs.first.original
+      expect(first_watering_start).to be_within(1).of(first_watering)
     end
   end
 end
