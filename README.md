@@ -1,17 +1,23 @@
 [![Ruby](https://github.com/tubsandcans/optimal-rain/actions/workflows/ruby.yml/badge.svg?branch=main)](https://github.com/tubsandcans/optimal-rain/actions/workflows/ruby.yml)
 
-### Manage watering schedule throughout a crop's lifecycle with Raspberry Pi (and Sinatra)
+## Manage watering schedule throughout a crop's lifecycle with Raspberry Pi (and Sinatra)
 
-This is currently aimed at achieveing the most basic functionality. I only intend to use this with one pump simultaneously but multiple pump pins can be provided as an environment setting: `GPIO_PINS="17 18 19"`. If this is not present, the default pin of 17 will be used as the one active pin.
+### GPIO
 
-#### Minimal interface
+Active pins can be set by environment variable `GPIO_PINS`.
 
-- Simply select a date and time from the form field and submit to create or modify a cycle.
+- If `GPIO_PINS` is not present, pin 17 will be used as the one active pin.
+- Multiple pump pins: `GPIO_PINS="17 18 19"`.
+- Don't forget to add to the startup.sh script before deploying to a Raspberry pi.
+
+### Minimal interface
+
+- Select a date and time from the form field and submit to create or modify a cycle.
 - Cycle Start's time should be the intended light-on time during the bloom phase.
 - For now, watering volumes are calculated using a percentage of 1 gallon container size.
   - Eventually: add an additional 'container_size' form input to make this configure-able.
 
-#### Install, create databases and perform migrations
+### Install, create databases and perform migrations
 
 Make sure sqlite3 is installed
 
@@ -21,6 +27,6 @@ Make sure sqlite3 is installed
 
 `APP_ENV=test bundle exec rake db:migrate`
 
-#### Add crontab entry to always run at startup:
+### Add crontab entry on Raspberry pi to always run at startup:
 
 `@reboot sh /home/pi/optimal-rain/startup.sh`
