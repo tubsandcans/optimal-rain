@@ -31,7 +31,6 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     check_now = from.nil?
     from = Time.now if check_now
     OptimalRain::ACCESS_LOGGER.info "Starting cycle for pin #{pin_number}"
-    OptimalRain::ACTIVE_PINS[pin_number].set_mode(OUT)
     days_elapsed = (from - cycle_start).to_i / (24 * 60 * 60)
     new_time = cycle_start.dup
     new_time += days_elapsed * (24 * 60 * 60)

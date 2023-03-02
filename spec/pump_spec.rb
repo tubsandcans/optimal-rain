@@ -39,13 +39,13 @@ describe "Pump" do
       watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
       # trigger execution of jobs just like Rufus-scheduler would when triggered
       watering[:schedule].scheduler.jobs.first.callable.call
-      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].get_value.to_i).to eq 1
+      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].value.to_i).to eq 1
     end
 
     it "sets pump pin-value to 0/off when the last scheduled job is called" do
       watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
       watering[:schedule].scheduler.jobs.last.callable.call
-      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].get_value.to_i).to eq 0
+      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].value.to_i).to eq 0
     end
   end
 
