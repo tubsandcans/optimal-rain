@@ -1,8 +1,8 @@
 [![Ruby](https://github.com/tubsandcans/optimal-rain/actions/workflows/ruby.yml/badge.svg?branch=main)](https://github.com/tubsandcans/optimal-rain/actions/workflows/ruby.yml)
 
-### Watering schedule throughout a crop's lifecycle with Raspberry Pi
+### Manage watering schedule throughout a crop's lifecycle with Raspberry Pi (and Sinatra)
 
-This is currently aimed at achieveing the most basic functionality. I only intend to use this with one pump simultaneously but the code is structured such that other pins could be used without having to make any drastic modifications. This is why the ACTIVE_PINS map only contains one GPIO value keyed to the PUMP_PIN constant (my in-use pin of #17).
+This is currently aimed at achieveing the most basic functionality. I only intend to use this with one pump simultaneously but multiple pump pins can be provided as an environment setting: `GPIO_PINS="17 18 19"`. If this is not present, the default pin of 17 will be used as the one active pin.
 
 #### Minimal interface
 

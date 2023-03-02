@@ -5,7 +5,9 @@ describe "Pump" do
   let(:first_watering) { start_time + (5 * 24 * 60 * 60) }
 
   before do
-    OptimalRain::Pump.insert(pin_number: OptimalRain::PUMP_PIN, cycle_start: start_time)
+    OptimalRain::PUMP_PINS.each do |pin, _gpio|
+      OptimalRain::Pump.insert(pin_number: pin, cycle_start: start_time)
+    end
   end
 
   context "when from-value is not set" do
