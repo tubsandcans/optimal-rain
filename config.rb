@@ -40,9 +40,12 @@ module OptimalRain
     else
       begin
         pins[pin_number] = GPIO.new(pin_number)
+        # This sleep prevents a GPIO race-condition. For more information:
+        # https://github.com/jwhitehorn/pi_piper/issues/92#issue-359237382
         sleep(0.1)
         pins[pin_number].set_mode(OUT)
       rescue Errno::ENOENT => _e
+        puts "Could not access actual GPIO, using MockGPIO instead"
         pins[pin_number] = MockGPIO.new
       end
     end
