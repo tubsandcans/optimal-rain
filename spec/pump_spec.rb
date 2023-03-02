@@ -11,40 +11,39 @@ describe "Pump" do
   context "when from-value is not set" do
     let(:override_start) { nil }
     let(:pump) { OptimalRain::Pump.last }
-    let(:watering) { OptimalRain::ACTIVE_SCHEDULES[pump.pin_number] }
+    let(:watering) {
+      {schedule: OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]}
+    }
 
     before do
       pump.next_watering
     end
 
     after do
+      watering[:schedule].cancel
       OptimalRain::ACTIVE_SCHEDULES[pump.pin_number] = nil
     end
 
     it "schedules the first begin-watering event 5 days from now" do
-      expect(watering.begin_watering_event).to be_within(1).of(first_watering)
-      watering.cancel
+      expect(watering[:schedule].begin_watering_event).to be_within(1).of(first_watering)
     end
 
     it "schedules the first end-watering event 5 days + watering-duration from now" do
-      expect(watering.end_watering_event).to be_within(1)
-        .of(first_watering + watering.duration_in_seconds)
-      watering.cancel
+      expect(watering[:schedule].end_watering_event).to be_within(1)
+        .of(first_watering + watering[:schedule].duration_in_seconds)
     end
 
     it "sets pump pin-value to 1/on when the first scheduled job is called" do
-      watering = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
+      watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
       # trigger execution of jobs just like Rufus-scheduler would when triggered
-      watering.scheduler.jobs.first.callable.call
+      watering[:schedule].scheduler.jobs.first.callable.call
       expect(OptimalRain::ACTIVE_PINS[pump.pin_number].get_value.to_i).to eq 1
-      watering.cancel
     end
 
     it "sets pump pin-value to 0/off when the last scheduled job is called" do
-      watering = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
-      watering.scheduler.jobs.last.callable.call
+      watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
+      watering[:schedule].scheduler.jobs.last.callable.call
       expect(OptimalRain::ACTIVE_PINS[pump.pin_number].get_value.to_i).to eq 0
-      watering.cancel
     end
   end
 
