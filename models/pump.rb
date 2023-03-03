@@ -102,8 +102,7 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     end
 
     # only executes here if currently outside the 24-hr period watering phase but within
-    # the crop-cycle. This means the next earliest scheduled watering is tomorrow at
-    # light-on (check_now be nil if we already called next_watering from this branch.
+    # the crop-cycle. The next earliest scheduled watering is tomorrow at light on time.
     tomorrow_light_on = cycle_start + ((days_elapsed + 1) * 24 * 60 * 60)
     OptimalRain::ACCESS_LOGGER.info "Going to check if tomorrow " \
       "(#{tomorrow_light_on}) has any watering events"

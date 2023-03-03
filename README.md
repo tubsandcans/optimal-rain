@@ -17,9 +17,9 @@ Active pins can be set by environment variable `GPIO_PINS`.
 - For now, watering volumes are calculated using a percentage of 1 gallon container size.
   - Eventually: add an additional 'container_size' form input to make this configure-able.
 
-### Install, create databases and perform migrations
+### Setup
 
-Make sure sqlite3 is installed
+Make sure sqlite3, ruby, and bundler are installed
 
 `bundle install`
 
@@ -27,6 +27,16 @@ Make sure sqlite3 is installed
 
 `APP_ENV=test bundle exec rake db:migrate`
 
+To run in development on port 9292:
+
+`bundle exec rackup`
+
+### Run Checks
+
+`bundle exec rake`
+
 ### Add crontab entry on Raspberry pi to always run at startup:
+
+`crontab -u pi -e`
 
 `@reboot sh /home/pi/optimal-rain/startup.sh`
