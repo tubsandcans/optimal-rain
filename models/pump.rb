@@ -20,6 +20,7 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
       scheduler: Rufus::Scheduler.new,
       volume_percentage: gallon_percentage
     )
+    # schedule the watering event and save reference to it in ACTIVE_SCHEDULES
     next_watering_event.begin_watering_event
     OptimalRain::ACTIVE_SCHEDULES[pin_number] = next_watering_event
   end
@@ -35,71 +36,79 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     new_time = cycle_start.dup
     new_time += days_elapsed * (24 * 60 * 60)
 
-    case from
-    when ..(cycle_start + (5 * 24 * 60 * 60))
-      # schedule the first watering of the cycle if current time
-      # is before the first day of watering:
-      add_watering_event(start_time: cycle_start + (5 * 24 * 60 * 60),
-        gallon_percentage: 0.03, from: from)
-      return
-    when (cycle_start + (5 * 24 * 60 * 60))..(cycle_start + (10 * 24 * 60 * 60))
-      # Second-half of veg phase, days 5-10
-      4.times do
-        return if add_watering_event(start_time: new_time,
+    phases = {
+      (cycle_start + (5 * 24 * 60 * 60)) => proc do
+        add_watering_event(start_time: cycle_start + (5 * 24 * 60 * 60),
           gallon_percentage: 0.03, from: from)
-        new_time += (20 * 60)
-      end
-    when (cycle_start + (11 * 24 * 60 * 60))..(cycle_start + (20 * 24 * 60 * 60))
-      # Early bloom phase, days 11-20 (1-10)
-      new_time += (2 * 60 * 60)
-      7.times do
-        return if add_watering_event(start_time: new_time, from: from)
-        new_time += (20 * 60)
-      end
-    when (cycle_start + (21 * 24 * 60 * 60))..(cycle_start + (30 * 24 * 60 * 60))
-      # Bulking P1, days 21-30 (11-20)
-      new_time += (60 * 60)
-      4.times do
-        return if add_watering_event(start_time: new_time, from: from)
-        new_time += (20 * 60)
-      end
-      new_time += (5 * 60 * 60)
-      2.times do
-        return if add_watering_event(start_time: new_time, from: from)
-        new_time += (4 * 60 * 60)
-      end
-    when (cycle_start + (31 * 24 * 60 * 60))..(cycle_start + (52 * 24 * 60 * 60))
-      # Bulking P2, days 31-52 (21-42)
-      new_time += (2 * 60 * 60)
-      4.times do
-        return if add_watering_event(start_time: new_time, from: from)
-        new_time += (20 * 60)
-      end
-      new_time += (2.5 * 60 * 60)
-      4.times do
-        return if add_watering_event(start_time: new_time, from: from)
+      end,
+      (cycle_start + (10 * 24 * 60 * 60)) => proc do
+        4.times do
+          # Second-half of veg phase, days 5-10
+          return if add_watering_event(start_time: new_time,
+            gallon_percentage: 0.03, from: from)
+          new_time += (20 * 60)
+        end
+      end,
+      (cycle_start + (20 * 24 * 60 * 60)) => proc do
+        # Early bloom phase, days 11-20 (1-10)
+        new_time += (2 * 60 * 60)
+        7.times do
+          return if add_watering_event(start_time: new_time, from: from)
+          new_time += (20 * 60)
+        end
+      end,
+      (cycle_start + (30 * 24 * 60 * 60)) => proc do
+        # Bulking P1, days 21-30 (11-20)
+        new_time += (60 * 60)
+        4.times do
+          return if add_watering_event(start_time: new_time, from: from)
+          new_time += (20 * 60)
+        end
+        new_time += (5 * 60 * 60)
+        2.times do
+          return if add_watering_event(start_time: new_time, from: from)
+          new_time += (4 * 60 * 60)
+        end
+      end,
+      (cycle_start + (52 * 24 * 60 * 60)) => proc do
+        # Bulking P2, days 31-52 (21-42)
+        new_time += (2 * 60 * 60)
+        4.times do
+          return if add_watering_event(start_time: new_time, from: from)
+          new_time += (20 * 60)
+        end
         new_time += (2.5 * 60 * 60)
+        4.times do
+          return if add_watering_event(start_time: new_time, from: from)
+          new_time += (2.5 * 60 * 60)
+        end
+      end,
+      (cycle_start + (63 * 24 * 60 * 60)) => proc do
+        # Late Bloom P1+P2, days 53-63 (P1:43-49, P2:50-53)
+        new_time += (2 * 60 * 60)
+        7.times do
+          return if add_watering_event(start_time: new_time, from: from)
+          new_time += (20 * 60)
+        end
+      end,
+      (cycle_start + (64 * 24 * 60 * 60) + (23 * 60 * 60)) => proc do
+        # Flush, day 64 (54)
+        new_time += (2 * 60 * 60)
+        15.times do
+          return if add_watering_event(start_time: new_time, from: from)
+          new_time += (20 * 60)
+        end
       end
-    when (cycle_start + (53 * 24 * 60 * 60))..(cycle_start + (63 * 24 * 60 * 60))
-      # Late Bloom P1+P2, days 53-63 (P1:43-49, P2:50-53)
-      new_time += (2 * 60 * 60)
-      7.times do
-        return if add_watering_event(start_time: new_time, from: from)
-        new_time += (20 * 60)
-      end
-    when ((cycle_start + (64 * 24 * 60 * 60))..
-      (cycle_start + (64 * 24 * 60 * 60) + (23 * 60 * 60)))
-      # Flush, day 64 (54)
-      new_time += (2 * 60 * 60)
-      15.times do
-        return if add_watering_event(start_time: new_time, from: from)
-        new_time += (20 * 60)
-      end
-    else
+    }
+
+    next_watering = phases[phases.keys.find { from < _1 }]
+    if next_watering.nil?
       OptimalRain::ACCESS_LOGGER.info "Cycle complete, done watering!"
       OptimalRain::ACTIVE_SCHEDULES[pin_number]&.cancel
       return
     end
+
+    next_watering.call
 
     # only executes here if currently outside the 24-hr period watering phase but within
     # the crop-cycle. The next earliest scheduled watering is tomorrow at light on time.
