@@ -2,6 +2,8 @@ require "raspi-gpio"
 require "rufus-scheduler"
 
 class OptimalRain::Pump < Sequel::Model(:pumps)
+  plugin :defaults_setter, cache: true
+  default_values[:rate] = 200
   # add_watering_event - schedules Pump.pin_number to send HIGH signal at start_time
   #  if start_time is in the future. Also schedules Pump.pin_number to send LOW signal
   #  at start_time + duration, after which the schedule for the watering is shut down
@@ -9,16 +11,15 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
   def add_watering_event(start_time:, from:, gallon_percentage: 0.05)
     return false if start_time < from
 
-    duration_in_seconds = (gallon_percentage / 4) * 60 * 60
-    OptimalRain::ACCESS_LOGGER.info(
-      "Schedule next watering to start at #{start_time}, and run for " \
-      "#{duration_in_seconds} seconds"
-    )
     next_watering_event = OptimalRain::Watering.new(
       pump: self,
       start_time: start_time,
       scheduler: Rufus::Scheduler.new,
       volume_percentage: gallon_percentage
+    )
+    OptimalRain::ACCESS_LOGGER.info(
+      "Schedule next watering to start at #{start_time}, and run for " \
+      "#{next_watering_event.duration_in_seconds} seconds"
     )
     # schedule the watering event and save reference to it in ACTIVE_SCHEDULES
     next_watering_event.begin_watering_event

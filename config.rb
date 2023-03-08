@@ -32,6 +32,7 @@ module OptimalRain
   ERROR_LOGGER.sync = true
 
   ACTIVE_SCHEDULES = {}
+  PUMP_CALIBRATIONS = Set.new
   PUMP_PINS = ENV.fetch("GPIO_PINS", "17").split(" ")
   ACTIVE_PINS = PUMP_PINS.each_with_object({}) do |pin, pins|
     pin_number = pin.to_i

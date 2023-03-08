@@ -6,7 +6,9 @@ describe "Pump" do
 
   before do
     OptimalRain::PUMP_PINS.each do |pin, _gpio|
-      OptimalRain::Pump.insert(pin_number: pin, cycle_start: start_time)
+      pump = OptimalRain::Pump.new(pin_number: pin, cycle_start: start_time)
+      pump.rate
+      pump.save_changes
     end
   end
 

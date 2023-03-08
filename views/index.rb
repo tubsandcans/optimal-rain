@@ -28,14 +28,18 @@ class OptimalRain::Views::Index < Phlex::HTML
           input type: "hidden", name: "_method", value: "put"
           input class: "cycle-start mr-1", type: "text",
             name: "cycle_start", value: pump.cycle_start
-          button type: "submit" do
-            "Change Cycle"
-          end
+          label { "(ml-per-plant in 30 seconds)" }
+          b(class: "mr-1") { "Rate" }
+          input class: "mr-1", type: "text", name: "rate", value: pump.rate
+          button(type: "submit") { "Change Cycle" }
         end
         form id: "remove_cycle_#{pump.id}", method: "POST", action: "/#{pump.id}" do
           input type: "hidden", name: "_method", value: "delete"
-          button class: "remove", type: "submit" do
-            "Remove"
+          button(class: "remove", type: "submit") { "Remove" }
+        end
+        unless OptimalRain::PUMP_CALIBRATIONS.include? pump.pin_number
+          form id: "calibrate_cycle_#{pump.id}", method: "GET", action: "/#{pump.id}/calibrate" do
+            button(class: "calibrate", type: "submit") { "Calibrate" }
           end
         end
       end
@@ -45,9 +49,7 @@ class OptimalRain::Views::Index < Phlex::HTML
           label { "Cycle start-time" }
           input type: "hidden", name: "pin_number", value: new_pump
           input class: "cycle-start mr-1", type: "text", name: "cycle_start"
-          button type: "submit" do
-            "Set Cycle"
-          end
+          button(type: "submit") { "Set Cycle" }
         end
       end
     end
