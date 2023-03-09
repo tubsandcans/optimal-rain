@@ -29,9 +29,7 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
   # next_watering - determines the next watering event for the current day.
   #   if there is an event, schedule it (add_watering_event) and return.
   #   if there is NOT an event, schedule to run the next day at light-on time.
-  def next_watering(from: nil)
-    check_now = from.nil?
-    from = Time.now if check_now
+  def next_watering(from: Time.now)
     OptimalRain::ACCESS_LOGGER.info "Starting cycle for pin #{pin_number}"
     days_elapsed = (from - cycle_start).to_i / (24 * 60 * 60)
     new_time = cycle_start.dup
