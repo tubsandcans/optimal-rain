@@ -32,7 +32,12 @@ module OptimalRain
   ERROR_LOGGER.sync = true
 
   program_name = ENV.fetch("PROGRAM", PHASE_SETS.first.first)
-  ACTIVE_PHASE_SET = PHASE_SETS.find { _1.first == program_name }.last
+  ACTIVE_PHASE_SET = PHASE_SETS.find { _1.first == program_name }&.last
+  if ACTIVE_PHASE_SET.nil?
+    puts "bad value provided for PROGRAM, no watering program found for '#{program_name}'"
+    exit 9
+  end
+
   ACTIVE_SCHEDULES = {}
   PUMP_CALIBRATIONS = Set.new
   PUMP_PINS = ENV.fetch("GPIO_PINS", "17").split(" ")
