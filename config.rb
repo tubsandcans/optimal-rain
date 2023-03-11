@@ -31,7 +31,8 @@ module OptimalRain
     "log", "error.log"), "a+")
   ERROR_LOGGER.sync = true
 
-  ACTIVE_PHASE_SET = ENV.fetch("PROGRAM", Phases.const_get(Phases.constants.first))
+  program_name = ENV.fetch("PROGRAM", PHASE_SETS.first.first)
+  ACTIVE_PHASE_SET = PHASE_SETS.find { _1.first == program_name }.last
   ACTIVE_SCHEDULES = {}
   PUMP_CALIBRATIONS = Set.new
   PUMP_PINS = ENV.fetch("GPIO_PINS", "17").split(" ")

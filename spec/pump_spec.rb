@@ -2,7 +2,7 @@ require "rspec"
 
 describe "Pump" do
   let(:start_time) { override_start || Time.now }
-  let(:first_watering) { start_time + (5 * 24 * 60 * 60) }
+  let(:first_watering) { start_time + (5 * OptimalRain::DAY) }
 
   before do
     OptimalRain::PUMP_PINS.each do |pin, _gpio|
@@ -12,7 +12,7 @@ describe "Pump" do
     end
   end
 
-  context "when from-value is not set" do
+  context "when from-value is default value of current-time" do
     let(:override_start) { nil }
     let(:pump) { OptimalRain::Pump.last }
     let(:watering) {
@@ -89,7 +89,7 @@ describe "Pump" do
       OptimalRain::ACTIVE_SCHEDULES[pump.pin_number].scheduler.jobs.first.call
       # verify that a watering event is scheduled at first_watering + 1 day
       expect(OptimalRain::ACTIVE_SCHEDULES[pump.pin_number].watering_event_start)
-        .to be_within(1).of(first_watering + (24 * 60 * 60))
+        .to be_within(1).of(first_watering + OptimalRain::DAY)
     end
   end
 
@@ -98,14 +98,14 @@ describe "Pump" do
     let(:pump) { OptimalRain::Pump.last }
 
     it "is all out of watering events" do
-      pump.cycle_start = start_time - (65 * 24 * 60 * 60)
+      pump.cycle_start = start_time - (65 * OptimalRain::DAY)
       pump.next_watering
       expect(OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]).to be_nil
     end
   end
 
   context "when cycle-start is in the future" do
-    let(:override_start) { Time.now + 2 * 24 * 60 * 60 }
+    let(:override_start) { Time.now + 2 * OptimalRain::DAY }
     let(:pump) { OptimalRain::Pump.last }
 
     it "schedules the first watering event 5 days from cycle-start" do
@@ -117,7 +117,7 @@ describe "Pump" do
   end
 
   context "when in early bloom phase (days 11-20) at light-on time" do
-    let(:override_start) { Time.now - 11 * 24 * 60 * 60 }
+    let(:override_start) { Time.now - 11 * OptimalRain::DAY }
     let(:pump) { OptimalRain::Pump.last }
 
     it "schedules the next watering event 2 hours from light-on time" do
@@ -129,7 +129,7 @@ describe "Pump" do
   end
 
   context "when in bulking phase (days 21-30) at light-on time" do
-    let(:override_start) { Time.now - 21 * 24 * 60 * 60 }
+    let(:override_start) { Time.now - 21 * OptimalRain::DAY }
     let(:pump) { OptimalRain::Pump.last }
 
     it "schedules the next watering event 1 hour from light-on time" do
@@ -141,7 +141,7 @@ describe "Pump" do
   end
 
   context "when in bulking phase right after last generative watering time" do
-    let(:override_start) { Time.now - ((30 * 24 * 60 * 60) + (140 * 60)) }
+    let(:override_start) { Time.now - ((30 * OptimalRain::DAY) + (140 * 60)) }
     let(:pump) { OptimalRain::Pump.last }
 
     it "schedules a vegetative watering in 20 minutes" do

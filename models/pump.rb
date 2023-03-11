@@ -25,12 +25,10 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     OptimalRain::ACTIVE_SCHEDULES[pin_number] = next_watering_event
   end
 
-  # next_watering - determines the next watering event for the current day.
-  #   if there is an event, schedule it (add_watering_event) and return.
-  #   if there is NOT an event, schedule to run the next day at light-on time.
+  # next_watering - schedules the first watering event to occur after :from (if any):
   def next_watering(from: Time.now)
     if cycle_start > from
-      add_watering_event(start_time: cycle_start + (5 * 24 * 60 * 60),
+      add_watering_event(start_time: cycle_start + (5 * OptimalRain::DAY),
         gallon_percentage: 0.03)
       return
     end
