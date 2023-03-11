@@ -1,6 +1,6 @@
 [![Ruby](https://github.com/tubsandcans/optimal-rain/actions/workflows/ruby.yml/badge.svg?branch=main)](https://github.com/tubsandcans/optimal-rain/actions/workflows/ruby.yml)
 
-## Manage watering schedule throughout a crop's lifecycle with Raspberry Pi (and Sinatra)
+## Managed plant watering schedule with Raspberry Pi (and Sinatra)
 
 ### GPIO
 
