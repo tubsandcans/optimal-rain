@@ -36,8 +36,8 @@ module OptimalRain
         phase_start_offset: (31 * DAY),
         replenishment_events: 4,
         refreshment_events: 4,
-        refreshment_interval: (2.5 * 60 * 60),
-        refreshment_offset: (2.5 * 60 * 60)
+        refreshment_interval: (2.5 * 60 * 60).to_i,
+        refreshment_offset: (2.5 * 60 * 60).to_i
       ),
       Phase.new(
         name: "Late bloom P1+P2 (days 43-53)",
