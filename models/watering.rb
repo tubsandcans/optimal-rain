@@ -11,7 +11,7 @@ class OptimalRain::Watering
     @volume = volume
   end
 
-  def begin_watering_event
+  def schedule_watering_event
     if @scheduler.jobs.empty?
       begin
         set_schedule
@@ -23,8 +23,12 @@ class OptimalRain::Watering
     @scheduler.jobs.first&.original
   end
 
+  def watering_event_start
+    @scheduler.jobs.first&.original
+  end
+
   # getter for stop event, scheduler.jobs can contain either 0 or 2 events
-  def end_watering_event
+  def watering_event_end
     @scheduler.jobs.last&.original
   end
 

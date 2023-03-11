@@ -1,3 +1,4 @@
+ENV["APP_ENV"] = "test"
 require "rack/test"
 require "database_cleaner-sequel"
 require "support/database_cleaner"

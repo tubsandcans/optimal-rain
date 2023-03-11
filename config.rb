@@ -7,8 +7,8 @@ if Sinatra::Application.environment == :test
 else
   Sequel.connect("sqlite://optimal_rain.db")
 end
+require_relative "models/phases"
 require_relative "models/pump"
-require_relative "models/watering"
 
 Logger.class_eval { alias_method :write, :<< }
 
@@ -31,6 +31,7 @@ module OptimalRain
     "log", "error.log"), "a+")
   ERROR_LOGGER.sync = true
 
+  ACTIVE_PHASE_SET = ENV.fetch("PROGRAM", Phases.const_get(Phases.constants.first))
   ACTIVE_SCHEDULES = {}
   PUMP_CALIBRATIONS = Set.new
   PUMP_PINS = ENV.fetch("GPIO_PINS", "17").split(" ")
