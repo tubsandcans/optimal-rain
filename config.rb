@@ -7,7 +7,7 @@ if Sinatra::Application.environment == :test
 else
   Sequel.connect("sqlite://optimal_rain.db")
 end
-require_relative "models/phases"
+require_relative "models/phase_sets"
 require_relative "models/pump"
 
 Logger.class_eval { alias_method :write, :<< }
