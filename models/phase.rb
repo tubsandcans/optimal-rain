@@ -36,8 +36,9 @@ module OptimalRain
       info: "time in between refreshment watering events"
     )
 
-    # next_watering -
-    def next_watering(pump:, from:)
+    # schedule_next_watering - schedules the next watering, returns false if
+    #   the cycle is finished (no more possible watering events).
+    def schedule_next_watering(pump:, from:)
       phase_start = pump.cycle_start + phase_start_offset
       return false unless (phase_start..(phase_start + duration)).cover? from
 
@@ -45,7 +46,7 @@ module OptimalRain
       # the last phase in a phase-set should ALWAYS have at least one event
       if (replenishment_events + refreshment_events).zero?
         phase_index = ACTIVE_PHASE_SET.index { _1 == self }
-        return ACTIVE_PHASE_SET[phase_index + 1].next_watering(
+        return ACTIVE_PHASE_SET[phase_index + 1].schedule_next_watering(
           pump: pump, from: (pump.cycle_start + (duration + OptimalRain::DAY))
         )
       end
@@ -77,7 +78,7 @@ module OptimalRain
       # if next_event is in the past, call next_watering function with
       # :from set to light-on time of the next 24-hour period (tomorrow):
       if next_event < from
-        next_watering(
+        schedule_next_watering(
           pump: pump,
           from: (pump.cycle_start + phase_start_offset +
             ((day_offset + 1) * OptimalRain::DAY))

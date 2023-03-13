@@ -35,7 +35,7 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
 
     OptimalRain::ACCESS_LOGGER.info "Starting cycle for pin #{pin_number}"
     current_phase = OptimalRain::ACTIVE_PHASE_SET.find do |phase|
-      phase.next_watering(pump: self, from: from)
+      phase.schedule_next_watering(pump: self, from: from)
     end
     unless current_phase
       OptimalRain::ACCESS_LOGGER.info "Cycle complete, done watering!"
