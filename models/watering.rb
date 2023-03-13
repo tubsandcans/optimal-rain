@@ -33,11 +33,12 @@ class OptimalRain::Watering
   end
 
   def duration_in_seconds
-    # rate per plant is 4GPH
+    # rate is based on 30-second interval, multiply by 2 to express in minutes
     (volume_in_ml.to_f / (@pump.rate * 2)) * 60
   end
 
   def volume_in_ml
+    # 3785.41 - milliliters per gallon
     (@volume_percentage * @volume * 3785.41).round
   end
 
