@@ -6,4 +6,4 @@ before {
 }
 use ::Rack::CommonLogger, OptimalRain::ACCESS_LOGGER
 run OptimalRain.app
-OptimalRain::Pump.all.map(&:next_watering)
+OptimalRain::Pump.all.map(&:schedule_next_watering)

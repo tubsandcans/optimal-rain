@@ -57,7 +57,7 @@ class OptimalRain::Watering
     @scheduler.at(@start_time + duration_in_seconds) do
       gpio_pin.set_value(LOW)
       @scheduler.shutdown
-      @pump.next_watering
+      @pump.schedule_next_watering
     end
   end
 end

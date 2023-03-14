@@ -15,7 +15,7 @@ module OptimalRain
       )
       new_pump.rate # needed to cache 'rate' default-value before saving
       new_pump.save_changes
-      new_pump.next_watering
+      new_pump.schedule_next_watering
       redirect to("/")
     end
 
@@ -23,7 +23,7 @@ module OptimalRain
       pump = Pump.first(id: params[:id])
       ACTIVE_SCHEDULES[pump.pin_number]&.cancel
       pump.update(cycle_start: params[:cycle_start], rate: params[:rate])
-      pump.next_watering
+      pump.schedule_next_watering
       redirect to("/")
     end
 
