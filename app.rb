@@ -40,7 +40,7 @@ module OptimalRain
       gpio_pin.set_value(HIGH)
       calibration = Rufus::Scheduler.new
       OptimalRain::PUMP_CALIBRATIONS << pump.pin_number
-      calibration.in("30s") do
+      calibration.in("#{OptimalRain::CALIBRATION_DURATION}s") do
         OptimalRain::PUMP_CALIBRATIONS.delete(pump.pin_number)
         gpio_pin.set_value(LOW)
       end

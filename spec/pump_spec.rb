@@ -34,7 +34,7 @@ describe "Pump" do
     end
 
     it "schedules the first end-watering event 5 days + watering-duration from now" do
-      expect(watering[:schedule].watering_event_end).to be_within(1)
+      expect(watering[:schedule].scheduler.jobs.last.original).to be_within(1)
         .of(first_watering + watering[:schedule].duration_in_seconds)
     end
 
