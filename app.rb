@@ -22,7 +22,10 @@ module OptimalRain
     put "/:id" do
       pump = Pump.first(id: params[:id])
       ACTIVE_SCHEDULES[pump.pin_number]&.cancel
-      pump.update(cycle_start: params[:cycle_start], rate: params[:rate])
+      pump.update(**(%i[cycle_start rate container_volume]
+                       .each_with_object({}) do |param_name, sanitized|
+                       sanitized[param_name] = params[param_name]
+                     end))
       pump.schedule_next_watering
       redirect to("/")
     end

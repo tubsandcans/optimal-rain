@@ -1,0 +1,30 @@
+.remove {
+    --accent: rgba(255, 60, 0, 0.82);
+}
+.calibrate {
+  --accent: rgba(255, 157, 0, 0.82);
+}
+.mr-1 {
+  margin-right: 0.2rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.inline {
+    display: inline-block;
+    position: relative;
+}
+
+/* position the unit to the right of the wrapper */
+div::after {
+    position: absolute;
+    top: 8px;
+    transition: all .05s ease-in-out;
+}
+
+/* set the unit abbreviation for each unit class */
+.rate-input::after {
+    content: 'ml-per-plant in 30 seconds';
+}

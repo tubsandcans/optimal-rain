@@ -5,6 +5,7 @@ require_relative "./watering"
 class OptimalRain::Pump < Sequel::Model(:pumps)
   plugin :defaults_setter, cache: true
   default_values[:rate] = 200
+  default_values[:container_volume] = 1 * OptimalRain::ML_PER_GAL
 
   # add_watering_event - schedules Pump.pin_number to send HIGH signal at start_time
   #  if start_time is in the future. Also schedules Pump.pin_number to send LOW signal

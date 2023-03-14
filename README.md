@@ -39,10 +39,9 @@ To run in development on port 9292:
 - Accepts http connections on port 9292
 - `bundle exec rackup` to start, or startup.sh script (runs with `APP_ENV=production`).
 - Select a date and time from the form field and submit to create or modify a cycle.
-- Cycle Start's time should be the intended light-on time during the bloom phase.
-- For now, watering volumes are calculated using a percentage of 1 gallon container size.
-  - Eventually: add an additional 'container_size' form input to make this configure-able.
-- Watering timing (how long between pump 'on' and 'off') is determined by volume and pump flow-rate.
+- Cycle-start time should be the intended light-on time during the bloom phase.
+- Watering volumes are calculated using a percentage of the selected container size.
+- Watering time (how long pump is kept on) is determined by volume and pump flow-rate.
 
 #### Calibrating
 
