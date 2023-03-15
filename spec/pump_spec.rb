@@ -30,7 +30,7 @@ describe "Pump" do
     end
 
     it "schedules the first begin-watering event 5 days from now" do
-      expect(watering[:schedule].schedule_watering_event)
+      expect(watering[:schedule].schedule_watering_events)
         .to be_within(1).of(first_watering)
     end
 
