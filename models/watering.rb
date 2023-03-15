@@ -7,12 +7,11 @@ module OptimalRain
   class Watering
     attr_accessor :scheduler
 
-    def initialize(pump:, start_time:, scheduler:, volume_percentage:, volume: 1)
+    def initialize(pump:, start_time:, scheduler:, volume_percentage:)
       @pump = pump
       @start_time = start_time
       @volume_percentage = volume_percentage
       @scheduler = scheduler
-      @volume = volume
     end
 
     def schedule_watering_event
@@ -36,7 +35,7 @@ module OptimalRain
     end
 
     def volume_in_ml
-      (@volume_percentage * @volume * ML_PER_GAL).round
+      (@volume_percentage * @pump.container_volume).round
     end
 
     def cancel
