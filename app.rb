@@ -14,6 +14,7 @@ module OptimalRain
         pin_number: params[:pin_number], cycle_start: params[:cycle_start]
       )
       new_pump.rate # needed to cache 'rate' default-value before saving
+      new_pump.container_volume # also for 'container_volume' default value
       new_pump.save_changes
       new_pump.schedule_next_watering
       redirect to("/")

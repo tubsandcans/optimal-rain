@@ -8,6 +8,7 @@ describe "Pump" do
     OptimalRain::PUMP_PINS.each do |pin, _gpio|
       pump = OptimalRain::Pump.new(pin_number: pin, cycle_start: start_time)
       pump.rate
+      pump.container_volume
       pump.save_changes
     end
   end
