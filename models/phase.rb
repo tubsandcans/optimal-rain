@@ -39,5 +39,11 @@ module OptimalRain
     attribute :refreshment_interval, Types::Strict::Integer.default(0).meta(
       info: "time in between refreshment watering events"
     )
+
+    # include? - determines if this phase is inclusive of :time based on :cycle_start
+    def include?(time:, cycle_start:)
+      phase_start = cycle_start + start_offset
+      (phase_start..(phase_start + duration)).cover? time
+    end
   end
 end
