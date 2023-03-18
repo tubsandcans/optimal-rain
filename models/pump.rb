@@ -24,7 +24,7 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     )
     # schedule the watering event and save reference to it in ACTIVE_SCHEDULES
     next_watering_event.schedule_watering_events
-    OptimalRain::ACTIVE_SCHEDULES[pin_number] = next_watering_event
+    OptimalRain::ACTIVE_SCHEDULES[:schedules] << next_watering_event
   end
 
   def active_phase(from: Time.now)

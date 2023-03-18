@@ -23,6 +23,8 @@ GEM
       database_cleaner-core (~> 2.0.0)
       sequel
     diff-lcs (1.5.0)
+    dry-container (0.11.0)
+      concurrent-ruby (~> 1.0)
     dry-core (1.0.0)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
@@ -164,7 +166,9 @@ PLATFORMS
 DEPENDENCIES
   bundler-audit
   capybara
+  concurrent-ruby
   database_cleaner-sequel
+  dry-container
   dry-struct
   dry-types
   phlex (~> 1.4)

@@ -17,7 +17,9 @@ describe "Pump" do
     let(:override_start) { nil }
     let(:pump) { OptimalRain::Pump.last }
     let(:watering) {
-      {schedule: OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]}
+      {schedule: OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |event|
+        event.pump.pin_number == pump.pin_number
+      end}
     }
 
     before do
@@ -26,7 +28,7 @@ describe "Pump" do
 
     after do
       watering[:schedule].cancel
-      OptimalRain::ACTIVE_SCHEDULES[pump.pin_number] = nil
+      OptimalRain::ACTIVE_SCHEDULES[:schedules].delete(watering[:schedule])
     end
 
     it "schedules the first begin-watering event 5 days from now" do
@@ -40,14 +42,18 @@ describe "Pump" do
     end
 
     it "sets pump pin-value to 1/on when the first scheduled job is called" do
-      watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
+      watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end
       # trigger execution of jobs just like Rufus-scheduler would when triggered
       watering[:schedule].scheduler.jobs.first.callable.call
       expect(OptimalRain::ACTIVE_PINS[pump.pin_number].value.to_i).to eq 1
     end
 
     it "sets pump pin-value to 0/off when the last scheduled job is called" do
-      watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
+      watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end
       watering[:schedule].scheduler.jobs.last.callable.call
       expect(OptimalRain::ACTIVE_PINS[pump.pin_number].value.to_i).to eq 0
     end
@@ -62,11 +68,15 @@ describe "Pump" do
     end
 
     after do
-      OptimalRain::ACTIVE_SCHEDULES[pump.pin_number] = nil
+      OptimalRain::ACTIVE_SCHEDULES[:schedules].delete_if do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end
     end
 
     it "schedules the next watering after the last scheduled job completes" do
-      watering = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
+      watering = OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end
       # the next watering will be 20 minutes from the last watering:
       expect(watering.watering_event_start).to be_within(1)
         .of(first_watering + (20 * 60))
@@ -83,14 +93,19 @@ describe "Pump" do
     end
 
     after do
-      OptimalRain::ACTIVE_SCHEDULES[pump.pin_number] = nil
+      OptimalRain::ACTIVE_SCHEDULES[:schedules].delete_if do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end
     end
 
     it "schedules the next watering event for tomorrow at light-on time" do
       # call the job (pump.next_watering) to create a Watering object for this pin
-      OptimalRain::ACTIVE_SCHEDULES[pump.pin_number].scheduler.jobs.first.call
+      next_event = OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end
+      next_event&.scheduler&.jobs&.first&.call
       # verify that a watering event is scheduled at first_watering + 1 day
-      expect(OptimalRain::ACTIVE_SCHEDULES[pump.pin_number].watering_event_start)
+      expect(next_event.watering_event_start)
         .to be_within(1).of(first_watering + OptimalRain::DAY)
     end
   end
@@ -102,7 +117,9 @@ describe "Pump" do
     it "is all out of watering events" do
       pump.cycle_start = start_time - (65 * OptimalRain::DAY)
       pump.schedule_next_watering
-      expect(OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]).to be_nil
+      expect(OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end).to be_nil
     end
   end
 
@@ -112,8 +129,9 @@ describe "Pump" do
 
     it "schedules the first watering event 5 days from cycle-start" do
       pump.schedule_next_watering
-      first_watering_start = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
-        .scheduler.jobs.first.original
+      first_watering_start = OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end&.scheduler&.jobs&.first&.original
       expect(first_watering_start).to be_within(1).of(first_watering)
     end
   end
@@ -124,8 +142,9 @@ describe "Pump" do
 
     it "schedules the next watering event 2 hours from light-on time" do
       pump.schedule_next_watering
-      next_watering_start = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
-        .scheduler.jobs.first.original
+      next_watering_start = OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end&.scheduler&.jobs&.first&.original
       expect(next_watering_start).to be_within(2 * OptimalRain::HOUR).of(Time.now)
     end
   end
@@ -136,8 +155,9 @@ describe "Pump" do
 
     it "schedules the next watering event 1 hour from light-on time" do
       pump.schedule_next_watering
-      next_watering_start = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
-        .scheduler.jobs.first.original
+      next_watering_start = OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end&.scheduler&.jobs&.first&.original
       expect(next_watering_start).to be_within(OptimalRain::HOUR).of(Time.now)
     end
   end
@@ -148,8 +168,9 @@ describe "Pump" do
 
     it "schedules a vegetative watering in 20 minutes" do
       pump.schedule_next_watering
-      next_watering_start = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
-        .scheduler.jobs.first.original
+      next_watering_start = OptimalRain::ACTIVE_SCHEDULES[:schedules].first do |watering|
+        watering.pump.pin_number == pump.pin_number
+      end&.scheduler&.jobs&.first&.original
       expect(next_watering_start).to be_within(440 * 60).of(Time.now)
     end
   end

@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "~> 3.2.1"
 
+gem "dry-container"
 gem "dry-struct"
 gem "dry-types"
 gem "puma"

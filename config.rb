@@ -38,7 +38,7 @@ module OptimalRain
     exit 9
   end
 
-  ACTIVE_SCHEDULES = {}
+  # ACTIVE_SCHEDULES = {}
   PUMP_CALIBRATIONS = Set.new
   PUMP_PINS = ENV.fetch("GPIO_PINS", "17").split(" ")
   ACTIVE_PINS = PUMP_PINS.each_with_object({}) do |pin, pins|

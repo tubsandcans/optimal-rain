@@ -10,7 +10,7 @@ class OptimalRain::Views::Index < Phlex::HTML
   def template
     render OptimalRain::Views::Layout.new do
       @pumps.each do |pump|
-        schedule = OptimalRain::ACTIVE_SCHEDULES[pump.pin_number]
+        schedule = OptimalRain::ACTIVE_SCHEDULES[:schedules].first { _1.pump.pin_number == pump.pin_number }
         if schedule.nil?
           p { "This cycle has ended, no future watering events." }
         else

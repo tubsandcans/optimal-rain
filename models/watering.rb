@@ -1,11 +1,18 @@
 # frozen_string_literal: true
 
+require "dry-container"
+
 module OptimalRain
   ML_PER_GAL = 3785.41
   CALIBRATION_DURATION = 30 # seconds
 
+  # Initialize container
+  ACTIVE_SCHEDULES = Dry::Container.new
+  # Register an item with the container to be resolved later
+  ACTIVE_SCHEDULES.register(:schedules, [])
+
   class Watering
-    attr_accessor :scheduler
+    attr_accessor :scheduler, :pump
 
     def initialize(pump:, start_time:, scheduler:, volume_percentage:)
       @pump = pump
@@ -41,7 +48,7 @@ module OptimalRain
 
     def cancel
       @scheduler.jobs.map { @scheduler.unschedule(_1) }
-      OptimalRain::ACTIVE_SCHEDULES[@pump.pin_number] = nil
+      OptimalRain::ACTIVE_SCHEDULES[:schedules].delete(self)
     end
 
     private
