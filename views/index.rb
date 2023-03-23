@@ -10,7 +10,8 @@ class OptimalRain::Views::Index < Phlex::HTML
   def template
     render OptimalRain::Views::Layout.new do
       @pumps.each do |pump|
-        schedule = OptimalRain::ACTIVE_SCHEDULES[:schedules].first { _1.pump.pin_number == pump.pin_number }
+        schedule = OptimalRain::ACTIVE_SCHEDULES
+          .resolve("schedules.find").call(pump.pin_number)
         if schedule.nil?
           p { "This cycle has ended, no future watering events." }
         else
@@ -46,12 +47,14 @@ class OptimalRain::Views::Index < Phlex::HTML
           button(type: "submit") { "Change Cycle" }
         end
         div class: "inline" do
-          form class: "inline mr-2", id: "remove_cycle_#{pump.id}", method: "POST", action: "/#{pump.id}" do
+          form class: "inline mr-2", id: "remove_cycle_#{pump.id}",
+               method: "POST", action: "/#{pump.id}" do
             input type: "hidden", name: "_method", value: "delete"
             button(class: "remove", type: "submit") { "Remove" }
           end
           unless OptimalRain::PUMP_CALIBRATIONS.include? pump.pin_number
-            form class: "inline", id: "calibrate_cycle_#{pump.id}", method: "GET", action: "/#{pump.id}/calibrate" do
+            form class: "inline", id: "calibrate_cycle_#{pump.id}",
+                 method: "GET", action: "/#{pump.id}/calibrate" do
               button(class: "calibrate", type: "submit") { "Calibrate" }
             end
           end

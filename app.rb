@@ -22,9 +22,7 @@ module OptimalRain
 
     put "/:id" do
       pump = Pump.first(id: params[:id])
-      ACTIVE_SCHEDULES[:schedules].first do |watering|
-        watering.pump.pin_number == pump.pin_number
-      end&.cancel
+      ACTIVE_SCHEDULES.resolve("schedules.find").call(pump.pin_number)&.cancel
       pump.update(**(%i[cycle_start rate container_volume]
                        .each_with_object({}) do |param_name, sanitized|
                        sanitized[param_name] = params[param_name]
@@ -35,9 +33,7 @@ module OptimalRain
 
     delete "/:id" do
       pump = Pump.first(id: params[:id])
-      ACTIVE_SCHEDULES[:schedules].first do |watering|
-        watering.pump.pin_number == pump.pin_number
-      end&.cancel
+      ACTIVE_SCHEDULES.resolve("schedules.find").call(pump.pin_number)&.cancel
       pump.delete
       redirect to("/")
     end
