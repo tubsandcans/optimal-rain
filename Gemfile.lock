@@ -166,7 +166,6 @@ PLATFORMS
 DEPENDENCIES
   bundler-audit
   capybara
-  concurrent-ruby
   database_cleaner-sequel
   dry-container
   dry-struct
