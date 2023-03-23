@@ -16,5 +16,5 @@ AllCops:
 
 Bundler/DuplicatedGem:
   Enabled: false # ignore duplicated gem errors because we will have duplicated gems when dual booting
-RSpec/FilePath:
-  Enabled: false # for some reason this rspec cop is buggy when using vscode-ruby
+RSpec/BeforeAfterAll:
+  Enabled: false

@@ -48,13 +48,13 @@ class OptimalRain::Views::Index < Phlex::HTML
         end
         div class: "inline" do
           form class: "inline mr-2", id: "remove_cycle_#{pump.id}",
-               method: "POST", action: "/#{pump.id}" do
+            method: "POST", action: "/#{pump.id}" do
             input type: "hidden", name: "_method", value: "delete"
             button(class: "remove", type: "submit") { "Remove" }
           end
           unless OptimalRain::PUMP_CALIBRATIONS.include? pump.pin_number
             form class: "inline", id: "calibrate_cycle_#{pump.id}",
-                 method: "GET", action: "/#{pump.id}/calibrate" do
+              method: "GET", action: "/#{pump.id}/calibrate" do
               button(class: "calibrate", type: "submit") { "Calibrate" }
             end
           end
