@@ -11,7 +11,8 @@ module OptimalRain
     post "/" do
       redirect to("/") if params[:cycle_start].empty?
       new_pump = Pump.new(
-        pin_number: params[:pin_number], cycle_start: params[:cycle_start]
+        pin_number: params[:pin_number], cycle_start: params[:cycle_start],
+        container_volume: params[:container_volume]
       )
       new_pump.rate # needed to cache 'rate' default-value before saving
       new_pump.container_volume # also for 'container_volume' default value
@@ -20,13 +21,11 @@ module OptimalRain
       redirect to("/")
     end
 
+    # use to update a pump's rate (the only thing that should change during a cycle)
     put "/:id" do
       pump = Pump.first(id: params[:id])
       ACTIVE_SCHEDULES.resolve("schedules.find").call(pump.pin_number)&.cancel
-      pump.update(**(%i[cycle_start rate container_volume]
-                       .each_with_object({}) do |param_name, sanitized|
-                       sanitized[param_name] = params[param_name]
-                     end))
+      pump.update(rate: params[:rate])
       pump.schedule_next_watering
       redirect to("/")
     end

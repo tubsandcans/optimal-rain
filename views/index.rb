@@ -10,11 +10,12 @@ class OptimalRain::Views::Index < Phlex::HTML
   def template
     render OptimalRain::Views::Layout.new do
       @pumps.each do |pump|
+        volume = (pump.container_volume / OptimalRain::ML_PER_GAL).to_i
         schedule = OptimalRain::ACTIVE_SCHEDULES
           .resolve("schedules.find").call(pump.pin_number)
         if schedule.nil?
           p { "This cycle has ended, no future watering events." }
-        else
+        elsif schedule.watering_event_start
           p do
             b(class: "mr-1") { "Next watering:" }
             em do
@@ -29,13 +30,13 @@ class OptimalRain::Views::Index < Phlex::HTML
           end
         end
         form id: "cycle_form", method: "POST", action: "/#{pump.id}" do
-          b(class: "mr-1") { "Pin #{pump.pin_number} cycle start" }
           input type: "hidden", name: "_method", value: "put"
-          input class: "cycle-start mr-1", type: "text",
-            name: "cycle_start", value: pump.cycle_start
+          b(class: "mr-1") { "Pin #{pump.pin_number} cycle start" }
+          input(class: "cycle-start mr-1", type: "text",
+            name: "cycle_start", value: pump.cycle_start)
           div do
             b(class: "mr-1") { "Container volume" }
-            container_volume_select(pump: pump)
+            plain("#{volume} gallon" + ((volume > 1) ? "s" : ""))
           end
           div class: "inline", style: "width:50%" do
             div(class: "mr-1 rate-input") do
@@ -63,9 +64,13 @@ class OptimalRain::Views::Index < Phlex::HTML
       @new_pumps.each do |new_pump|
         h4 { "New cycle for pin #{new_pump}" }
         form(id: "new_cycle_form", method: "POST", action: "/") do
-          label { "Cycle start-time" }
           input type: "hidden", name: "pin_number", value: new_pump
-          input class: "cycle-start mr-1", type: "text", name: "cycle_start"
+          b(class: "mr-1") { "Cycle start" }
+          input(class: "cycle-start mr-1", type: "text", name: "cycle_start")
+          div do
+            b(class: "mr-1") { "Container volume" }
+            container_volume_select
+          end
           button(type: "submit") { "Set Cycle" }
         end
       end
@@ -74,11 +79,11 @@ class OptimalRain::Views::Index < Phlex::HTML
 
   private
 
-  def container_volume_select(pump:)
+  def container_volume_select
     select name: "container_volume" do
       3.times.each do |i|
         value = OptimalRain::ML_PER_GAL * (i + 1)
-        option(value: value, selected: value == pump.container_volume) do
+        option(value: value) do
           "#{i + 1} gallon"
         end
       end
