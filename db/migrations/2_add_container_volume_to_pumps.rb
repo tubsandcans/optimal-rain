@@ -1,5 +1,3 @@
-require_relative "../../config"
-
 Sequel.migration do
   up do
     add_column :pumps, :container_volume, :float

@@ -85,4 +85,9 @@ module OptimalRain
   end
 end
 
-require_relative "models/pump"
+begin
+  require_relative "models/pump"
+rescue => e
+  puts "error loading pumps! (safely ignore if run from migration)"
+  puts e.message
+end
