@@ -4,7 +4,7 @@ require_relative "views/index"
 module OptimalRain
   class App < Sinatra::Application
     get "/" do
-      new_pumps = ACTIVE_PINS.keys - Pump.all.map(&:pin_number)
+      new_pumps = PUMP[:pins].keys - Pump.all.map(&:pin_number)
       Views::Index.new(pumps: Pump.all, new_pumps: new_pumps).call
     end
 
@@ -39,7 +39,7 @@ module OptimalRain
 
     get "/:id/calibrate" do
       pump = Pump.first(id: params[:id])
-      gpio_pin = OptimalRain::ACTIVE_PINS[pump.pin_number]
+      gpio_pin = OptimalRain::PUMP[:pins][pump.pin_number]
       gpio_pin.set_value(HIGH)
       calibration = Rufus::Scheduler.new
       OptimalRain::PUMP_CALIBRATIONS << pump.pin_number

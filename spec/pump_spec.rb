@@ -6,7 +6,7 @@ describe "Pump" do
 
   before do
     pump = OptimalRain::Pump.new(
-      pin_number: OptimalRain::ACTIVE_PINS.keys.first,
+      pin_number: OptimalRain::PUMP[:pins].keys.first,
       cycle_start: start_time
     )
     pump.rate
@@ -28,7 +28,7 @@ describe "Pump" do
 
     after :context do
       OptimalRain::ACTIVE_SCHEDULES
-        .resolve("schedules.delete").call(OptimalRain::ACTIVE_PINS.keys.first)
+        .resolve("schedules.delete").call(OptimalRain::PUMP[:pins].keys.first)
     end
 
     it "schedules the first begin-watering event 5 days from now" do
@@ -46,14 +46,14 @@ describe "Pump" do
         .resolve("schedules.find").call(pump.pin_number)
       # trigger execution of jobs just like Rufus-scheduler would when triggered
       watering[:schedule].scheduler.jobs.first.callable.call
-      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].value.to_i).to eq 1
+      expect(OptimalRain::PUMP[:pins][pump.pin_number].value.to_i).to eq 1
     end
 
     it "sets pump pin-value to 0/off when the last scheduled job is called" do
       watering[:schedule] = OptimalRain::ACTIVE_SCHEDULES
         .resolve("schedules.find").call(pump.pin_number)
       watering[:schedule].scheduler.jobs.last.callable.call
-      expect(OptimalRain::ACTIVE_PINS[pump.pin_number].value.to_i).to eq 0
+      expect(OptimalRain::PUMP[:pins][pump.pin_number].value.to_i).to eq 0
     end
   end
 
@@ -67,7 +67,7 @@ describe "Pump" do
 
     after :context do
       OptimalRain::ACTIVE_SCHEDULES
-        .resolve("schedules.delete").call(OptimalRain::ACTIVE_PINS.keys.first)
+        .resolve("schedules.delete").call(OptimalRain::PUMP[:pins].keys.first)
     end
 
     it "schedules the next watering after the last scheduled job completes" do
@@ -90,7 +90,7 @@ describe "Pump" do
 
     after :context do
       OptimalRain::ACTIVE_SCHEDULES
-        .resolve("schedules.delete").call(OptimalRain::ACTIVE_PINS.keys.first)
+        .resolve("schedules.delete").call(OptimalRain::PUMP[:pins].keys.first)
     end
 
     it "schedules the next watering event for tomorrow at light-on time" do
@@ -119,7 +119,7 @@ describe "Pump" do
   context "when cycle-start is in the future" do
     after :context do
       OptimalRain::ACTIVE_SCHEDULES
-        .resolve("schedules.delete").call(OptimalRain::ACTIVE_PINS.keys.first)
+        .resolve("schedules.delete").call(OptimalRain::PUMP[:pins].keys.first)
     end
 
     let(:override_start) { Time.now + 2 * OptimalRain::DAY }
@@ -137,7 +137,7 @@ describe "Pump" do
   context "when in early bloom phase (days 11-20) at light-on time" do
     after :context do
       OptimalRain::ACTIVE_SCHEDULES
-        .resolve("schedules.delete").call(OptimalRain::ACTIVE_PINS.keys.first)
+        .resolve("schedules.delete").call(OptimalRain::PUMP[:pins].keys.first)
     end
 
     let(:override_start) { Time.now - 11 * OptimalRain::DAY }
@@ -155,7 +155,7 @@ describe "Pump" do
   context "when in bulking phase (days 21-30) at light-on time" do
     after :context do
       OptimalRain::ACTIVE_SCHEDULES
-        .resolve("schedules.delete").call(OptimalRain::ACTIVE_PINS.keys.first)
+        .resolve("schedules.delete").call(OptimalRain::PUMP[:pins].keys.first)
     end
 
     let(:override_start) { Time.now - 21 * OptimalRain::DAY }
@@ -173,7 +173,7 @@ describe "Pump" do
   context "when in bulking phase right after last generative watering time" do
     after :context do
       OptimalRain::ACTIVE_SCHEDULES
-        .resolve("schedules.delete").call(OptimalRain::ACTIVE_PINS.keys.first)
+        .resolve("schedules.delete").call(OptimalRain::PUMP[:pins].keys.first)
     end
 
     let(:override_start) { Time.now - ((30 * OptimalRain::DAY) + (140 * 60)) }

@@ -46,7 +46,7 @@ module OptimalRain
     # set_schedule schedules pump 'on' and 'off' events. Off-event callback executes
     # past the off-signal to restart the scheduling of future watering events.
     def set_schedule
-      gpio_pin = OptimalRain::ACTIVE_PINS[@pump.pin_number]
+      gpio_pin = OptimalRain::PUMP[:pins][@pump.pin_number]
       @scheduler.at @start_time do
         gpio_pin.set_value(HIGH)
       end

@@ -1,4 +1,3 @@
-require "raspi-gpio"
 require "rufus-scheduler"
 require_relative "./watering"
 
