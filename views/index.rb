@@ -46,7 +46,7 @@ class OptimalRain::Views::Index < Phlex::HTML
               plain("ml-per-plant in 30 seconds")
             end
           end
-          button(type: "submit") { "Change Cycle" }
+          button(type: "submit") { "Change Rate" }
         end
         div class: "inline" do
           form class: "inline mr-2", id: "remove_cycle_#{pump.id}",

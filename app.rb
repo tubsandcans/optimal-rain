@@ -21,7 +21,7 @@ module OptimalRain
       redirect to("/")
     end
 
-    # use to update a pump's rate (the only thing that should change during a cycle)
+    # use to update a pump's rate
     put "/:id" do
       pump = Pump.first(id: params[:id])
       ACTIVE_SCHEDULES.resolve("schedules.find").call(pump.pin_number)&.cancel
