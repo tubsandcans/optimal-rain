@@ -1,24 +1,6 @@
 # frozen_string_literal: true
 
-require "dry-container"
-
 module OptimalRain
-  ML_PER_GAL = 3785.41
-  CALIBRATION_DURATION = 30 # seconds
-
-  # Initialize container
-  ACTIVE_SCHEDULES = Dry::Container.new
-  # Register an item with the container to be resolved later
-  ACTIVE_SCHEDULES.register(:schedules, [])
-  ACTIVE_SCHEDULES.namespace("schedules") do
-    register("find", call: false) do |pin_number|
-      ACTIVE_SCHEDULES[:schedules].find { _1.pump.pin_number == pin_number }
-    end
-    register("delete", call: false) do |pin_number|
-      ACTIVE_SCHEDULES[:schedules].delete_if { _1.pump.pin_number == pin_number }
-    end
-  end
-
   class Watering
     attr_accessor :scheduler, :pump
 

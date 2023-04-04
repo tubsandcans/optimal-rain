@@ -1,3 +1,4 @@
+require "dry-container"
 require "logger"
 require "sequel"
 require_relative "./app"
@@ -8,7 +9,6 @@ else
   Sequel.connect("sqlite://optimal_rain.db")
 end
 require_relative "models/phase_sets"
-require_relative "models/pump"
 
 Logger.class_eval { alias_method :write, :<< }
 
@@ -38,7 +38,21 @@ module OptimalRain
     exit 9
   end
 
-  # ACTIVE_SCHEDULES = {}
+  ML_PER_GAL = 3785.41
+  CALIBRATION_DURATION = 30 # seconds
+
+  # Initialize container keeping active schedule state
+  ACTIVE_SCHEDULES = Dry::Container.new
+  ACTIVE_SCHEDULES.register(:schedules, [])
+  ACTIVE_SCHEDULES.namespace("schedules") do
+    register("find", call: false) do |pin_number|
+      ACTIVE_SCHEDULES[:schedules].find { _1.pump.pin_number == pin_number }
+    end
+    register("delete", call: false) do |pin_number|
+      ACTIVE_SCHEDULES[:schedules].delete_if { _1.pump.pin_number == pin_number }
+    end
+  end
+
   PUMP_CALIBRATIONS = Set.new
   PUMP_PINS = ENV.fetch("GPIO_PINS", "17").split(" ")
   ACTIVE_PINS = PUMP_PINS.each_with_object({}) do |pin, pins|
@@ -65,3 +79,5 @@ module OptimalRain
     end
   end
 end
+
+require_relative "models/pump"
