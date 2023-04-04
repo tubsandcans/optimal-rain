@@ -31,18 +31,19 @@ class OptimalRain::Views::Index < Phlex::HTML
         end
         form id: "cycle_form", method: "POST", action: "/#{pump.id}" do
           input type: "hidden", name: "_method", value: "put"
-          b(class: "mr-1") { "Pin #{pump.pin_number} cycle start" }
-          input(class: "cycle-start mr-1", type: "text",
-            name: "cycle_start", value: pump.cycle_start)
-          div do
-            b(class: "mr-1") { "Container volume" }
+          b(class: "mr-1") { "Pin #{pump.pin_number} cycle start: " }
+          plain(pump.cycle_start.strftime("%B %d %I:%M %p"))
+          div style: "margin-top: 1.0rem" do
+            b(class: "mr-1") { "Container volume: " }
             plain("#{volume} gallon" + ((volume > 1) ? "s" : ""))
           end
-          div class: "inline", style: "width:50%" do
-            div(class: "mr-1 rate-input") do
+          div class: "inline" do
+            div style: "margin-top: 0.5rem" do
               b(class: "mr-1") { "Rate" }
-              input class: "mr-1", type: "text", name: "rate",
-                value: pump.rate, style: "width: 20%"
+              input class: "mr-1", type: "text", name: "rate", value: pump.rate, style: "width: 120px"
+            end
+            div style: "margin-top: 1.8rem" do
+              plain("ml-per-plant in 30 seconds")
             end
           end
           button(type: "submit") { "Change Cycle" }

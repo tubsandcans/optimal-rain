@@ -13,18 +13,11 @@
 }
 
 .inline {
-    display: inline-block;
-    position: relative;
+    display: flex;
 }
 
 /* position the unit to the right of the wrapper */
 div::after {
     position: absolute;
-    top: 8px;
     transition: all .05s ease-in-out;
-}
-
-/* set the unit abbreviation for each unit class */
-.rate-input::after {
-    content: 'ml-per-plant in 30 seconds';
 }
