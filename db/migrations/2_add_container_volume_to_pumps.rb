@@ -1,4 +1,4 @@
-require_relative "../../models/watering"
+require_relative "../../config"
 
 Sequel.migration do
   up do
