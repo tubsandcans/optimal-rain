@@ -187,4 +187,19 @@ describe "Pump" do
       expect(next_watering_start).to be_within(440 * 60).of(Time.now)
     end
   end
+
+  context "when cycle-start is between 96 and 120 hours ago" do
+    let(:override_start) { Time.now - (100 * OptimalRain::HOUR) }
+    let(:pump) { OptimalRain::Pump.last }
+
+    it "should have a next scheduled watering" do
+      pump.schedule_next_watering
+      next_watering_start = OptimalRain::ACTIVE_SCHEDULES
+        .resolve("schedules.find").call(pump.pin_number)
+                              &.scheduler&.jobs&.first&.original
+      # next_watering_start should occur 20 hours from now
+      twenty_hours_from_now = Time.now + OptimalRain::DAY - (4 * OptimalRain::HOUR)
+      expect(next_watering_start).to be_within(1).of(twenty_hours_from_now)
+    end
+  end
 end

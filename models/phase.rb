@@ -10,15 +10,14 @@ module OptimalRain
   DAY = 24 * HOUR
 
   class Phase < Dry::Struct
+    attr_accessor :start_offset
+
     include Types
     attribute :name, Types::Strict::String.meta(info: "phase name")
     attribute :duration, Types::Strict::Integer.meta(info: "phase-length in days")
     attribute :volume, Types::Strict::Float.default(0.05).meta(
       info: "target-volume amount per watering per plant, expressed as a percentage " \
             "of 1gallon container size "
-    )
-    attribute :start_offset, Types::Strict::Integer.default(0).meta(
-      info: "number of seconds this phase begins after cycle-start"
     )
     attribute :replenishment_events, Types::Strict::Integer.default(0).meta(
       info: "number of replenishment watering events"
@@ -41,7 +40,7 @@ module OptimalRain
     )
 
     # include? - determines if this phase is inclusive of :time based on :cycle_start
-    def include?(time:, cycle_start:)
+    def include?(time:, cycle_start:, start_offset:)
       phase_start = cycle_start + start_offset
       (phase_start..(phase_start + duration)).cover? time
     end
