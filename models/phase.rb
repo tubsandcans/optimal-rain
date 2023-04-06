@@ -40,11 +40,9 @@ module OptimalRain
     )
 
     # include? - determines if this phase is inclusive of :time based on :cycle_start
-    # accepts a block to permit modifications in caller before closure
     def include?(time:, start:)
       adjusted_start = start
       adjusted_start += start_offset unless start_offset.zero?
-      yield(duration)
       (adjusted_start..(adjusted_start + duration)).cover? time
     end
   end

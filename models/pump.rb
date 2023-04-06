@@ -30,7 +30,8 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     phase_start_offset = 0
     OptimalRain::ACTIVE_PHASE_SET.find do |phase|
       phase.start_offset = phase_start_offset
-      phase.include?(time: from, start: cycle_start) { phase_start_offset += _1 }
+      phase_start_offset += phase.duration
+      phase.include?(time: from, start: cycle_start)
     end
   end
 
