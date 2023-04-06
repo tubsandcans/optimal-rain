@@ -16,8 +16,8 @@ module OptimalRain
     attribute :name, Types::Strict::String.meta(info: "phase name")
     attribute :duration, Types::Strict::Integer.meta(info: "phase-length in days")
     attribute :volume, Types::Strict::Float.default(0.05).meta(
-      info: "target-volume amount per watering per plant, expressed as a percentage " \
-            "of 1gallon container size "
+      info: "volume watering amount per plant, expressed as a percentage " \
+            "of container size"
     )
     attribute :replenishment_events, Types::Strict::Integer.default(0).meta(
       info: "number of replenishment watering events"
@@ -40,9 +40,12 @@ module OptimalRain
     )
 
     # include? - determines if this phase is inclusive of :time based on :cycle_start
-    def include?(time:, cycle_start:, start_offset:)
-      phase_start = cycle_start + start_offset
-      (phase_start..(phase_start + duration)).cover? time
+    # accepts a block to permit modifications in caller before closure
+    def include?(time:, start:)
+      adjusted_start = start
+      adjusted_start += start_offset unless start_offset.zero?
+      yield(duration)
+      (adjusted_start..(adjusted_start + duration)).cover? time
     end
   end
 end

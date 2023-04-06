@@ -31,16 +31,12 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     OptimalRain::ACCESS_LOGGER.info "Starting cycle for pin #{pin_number}"
 
     phase_start_offset = 0
-    phase = OptimalRain::ACTIVE_PHASE_SET.each do |phaze|
-      if phaze.include?(time: from, cycle_start: cycle_start, start_offset: phase_start_offset)
-        break phaze
-      end
-      phase_start_offset += phaze.duration
+    phase = OptimalRain::ACTIVE_PHASE_SET.find do |phase|
+      phase.start_offset = phase_start_offset
+      phase.include?(time: from, start: cycle_start) { phase_start_offset += _1 }
     end
+    return nil, from if phase.nil?
 
-    return nil, from if phase.is_a? Array
-
-    phase.start_offset = phase_start_offset
     # if phase has no events, next watering event must be in next phase.
     # The last phase in a phase-set should ALWAYS have at least one event
     if (phase.replenishment_events + phase.refreshment_events).zero?

@@ -1,5 +1,6 @@
 require "rspec"
 
+# rubocop:disable Rspec/ExampleLength
 describe "Pump" do
   let(:start_time) { override_start || Time.now }
   let(:first_watering) { start_time + (5 * OptimalRain::DAY) }
@@ -188,11 +189,14 @@ describe "Pump" do
     end
   end
 
-  context "when cycle-start is between 96 and 120 hours ago" do
+  # creating cycles with past start-times creates edge-case scenario with Phase's
+  # in-between phases: (after current phase's last watering event, before
+  # next phase's first watering event)
+  context "when current time within the cycle is in-between phases" do
     let(:override_start) { Time.now - (100 * OptimalRain::HOUR) }
     let(:pump) { OptimalRain::Pump.last }
 
-    it "should have a next scheduled watering" do
+    it "has a next scheduled watering" do
       pump.schedule_next_watering
       next_watering_start = OptimalRain::ACTIVE_SCHEDULES
         .resolve("schedules.find").call(pump.pin_number)
@@ -203,3 +207,4 @@ describe "Pump" do
     end
   end
 end
+# rubocop:enable Rspec/ExampleLength
