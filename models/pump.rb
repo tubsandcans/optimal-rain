@@ -42,12 +42,14 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
       OptimalRain::ACCESS_LOGGER.info "Cycle complete, done watering!"
       return
     end
+
     # if phase has no events, next watering event must be in next phase.
     if (phase.replenishment_events + phase.refreshment_events).zero?
-      phase_index = OptimalRain::ACTIVE_PHASE_SET.index(phase)
-      phase = OptimalRain::ACTIVE_PHASE_SET[phase_index + 1]
-      phase.start_offset = OptimalRain::ACTIVE_PHASE_SET[phase_index].duration
-      from = cycle_start + phase.start_offset
+      offset = phase.start_offset + phase.duration
+      phase = OptimalRain::
+          ACTIVE_PHASE_SET[OptimalRain::ACTIVE_PHASE_SET.index(phase) + 1]
+      phase.start_offset = offset
+      from = cycle_start + offset
     end
 
     day_offset = ((from - (cycle_start + phase.start_offset)) / OptimalRain::DAY).to_i
