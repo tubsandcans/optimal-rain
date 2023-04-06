@@ -2,6 +2,9 @@ require_relative "./phase"
 
 module OptimalRain
   # all known watering programs, the first in the list is the default program.
+  # RULES:
+  #   The last phase in a phase-set should ALWAYS have at least one event.
+  #   There should never be two consecutive phases with zero events.
   PHASE_SETS = [
     ["burn-and-turn", [
       Phase.new(name: "Vegetative days 1-5", duration: 5 * DAY),
