@@ -26,7 +26,7 @@ class OptimalRain::Views::Index < Phlex::HTML
           end
           div style: "margin-bottom:1.0rem" do
             b(class: "mr-1") { "Current phase:" }
-            em { pump.active_phase.first&.name }
+            em { pump.active_phase.name }
           end
         end
         form id: "cycle_form", method: "POST", action: "/#{pump.id}" do

@@ -28,21 +28,10 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
 
   def active_phase(from: Time.now)
     phase_start_offset = 0
-    phase = OptimalRain::ACTIVE_PHASE_SET.find do |phase|
+    OptimalRain::ACTIVE_PHASE_SET.find do |phase|
       phase.start_offset = phase_start_offset
       phase.include?(time: from, start: cycle_start) { phase_start_offset += _1 }
     end
-    return phase if phase.nil?
-
-    # if phase has no events, next watering event must be in next phase.
-    if (phase.replenishment_events + phase.refreshment_events).zero?
-      phase_index = OptimalRain::ACTIVE_PHASE_SET.index(phase)
-      phase = OptimalRain::ACTIVE_PHASE_SET[phase_index + 1]
-      phase.start_offset = OptimalRain::ACTIVE_PHASE_SET[phase_index].duration
-      from = cycle_start + phase.start_offset
-    end
-    yield(from)
-    phase
   end
 
   # schedule_next_watering - schedules the first watering event after :from (if any):
@@ -52,6 +41,13 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
     if phase.nil?
       OptimalRain::ACCESS_LOGGER.info "Cycle complete, done watering!"
       return
+    end
+    # if phase has no events, next watering event must be in next phase.
+    if (phase.replenishment_events + phase.refreshment_events).zero?
+      phase_index = OptimalRain::ACTIVE_PHASE_SET.index(phase)
+      phase = OptimalRain::ACTIVE_PHASE_SET[phase_index + 1]
+      phase.start_offset = OptimalRain::ACTIVE_PHASE_SET[phase_index].duration
+      from = cycle_start + phase.start_offset
     end
 
     day_offset = ((from - (cycle_start + phase.start_offset)) / OptimalRain::DAY).to_i
