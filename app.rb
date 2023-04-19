@@ -39,13 +39,12 @@ module OptimalRain
 
     get "/:id/calibrate" do
       pump = Pump.first(id: params[:id])
-      gpio_pin = OptimalRain::PUMP[:pins][pump.pin_number]
-      gpio_pin.set_value(HIGH)
+      OptimalRain::PUMP[:pins][pump.pin_number].set_value(HIGH)
       calibration = Rufus::Scheduler.new
       OptimalRain::PUMP_CALIBRATIONS << pump.pin_number
       calibration.in("#{OptimalRain::CALIBRATION_DURATION}s") do
         OptimalRain::PUMP_CALIBRATIONS.delete(pump.pin_number)
-        gpio_pin.set_value(LOW)
+        OptimalRain::PUMP[:pins][pump.pin_number].set_value(LOW)
       end
       redirect to("/")
     end
