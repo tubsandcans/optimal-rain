@@ -24,7 +24,7 @@ module OptimalRain
     # use to update a pump's rate
     put "/:id" do
       pump = Pump.first(id: params[:id])
-      ACTIVE_SCHEDULES.resolve("schedules.find").call(pump.pin_number)&.cancel
+      ACTIVE_SCHEDULES.resolve("schedules")[pump.pin_number]&.cancel
       pump.update(rate: params[:rate])
       pump.schedule_next_watering
       redirect to("/")
@@ -32,7 +32,7 @@ module OptimalRain
 
     delete "/:id" do
       pump = Pump.first(id: params[:id])
-      ACTIVE_SCHEDULES.resolve("schedules.find").call(pump.pin_number)&.cancel
+      ACTIVE_SCHEDULES.resolve("schedules")[pump.pin_number]&.cancel
       pump.delete
       redirect to("/")
     end

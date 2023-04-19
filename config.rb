@@ -44,15 +44,7 @@ module OptimalRain
 
   # Initialize container for global active schedule
   ACTIVE_SCHEDULES = Dry::Container.new
-  ACTIVE_SCHEDULES.register(:schedules, [])
-  ACTIVE_SCHEDULES.namespace("schedules") do
-    register("find", call: false) do |pin_number|
-      ACTIVE_SCHEDULES[:schedules].find { _1.pump.pin_number == pin_number }
-    end
-    register("delete", call: false) do |pin_number|
-      ACTIVE_SCHEDULES[:schedules].delete_if { _1.pump.pin_number == pin_number }
-    end
-  end
+  ACTIVE_SCHEDULES.register(:schedules, {})
   # Initialize container for global active pins
   PUMP = Dry::Container.new
   PUMP.register(
