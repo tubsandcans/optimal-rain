@@ -38,7 +38,7 @@ module OptimalRain
 
     def cancel
       @scheduler.jobs.map { @scheduler.unschedule(_1) }
-      OptimalRain::ACTIVE_SCHEDULES[:schedules].delete(pump.pin_number)
+      OptimalRain::NEXT_WATERING[:pins].delete(pump.pin_number)
     end
 
     private

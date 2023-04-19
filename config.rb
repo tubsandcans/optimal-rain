@@ -43,8 +43,8 @@ module OptimalRain
   CALIBRATION_DURATION = 30 # seconds
 
   # Initialize container for global active schedule
-  ACTIVE_SCHEDULES = Dry::Container.new
-  ACTIVE_SCHEDULES.register(:schedules, {})
+  NEXT_WATERING = Dry::Container.new
+  NEXT_WATERING.register(:pins, {})
   # Initialize container for global active pins
   PUMP = Dry::Container.new
   PUMP.register(
