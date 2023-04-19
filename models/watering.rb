@@ -38,7 +38,7 @@ module OptimalRain
 
     def cancel
       @scheduler.jobs.map { @scheduler.unschedule(_1) }
-      OptimalRain::NEXT_WATERING[:pins].delete(pump.pin_number)
+      OptimalRain::PUMP[:pins][pump.pin_number].delete(:schedule)
     end
 
     private
@@ -46,7 +46,7 @@ module OptimalRain
     # set_schedule schedules pump 'on' and 'off' events. Off-event callback executes
     # past the off-signal to restart the scheduling of future watering events.
     def set_schedule
-      gpio_pin = OptimalRain::PUMP[:pins][@pump.pin_number]
+      gpio_pin = OptimalRain::PUMP[:pins][@pump.pin_number][:gpio]
       @scheduler.at @start_time do
         gpio_pin.set_value(HIGH)
       end

@@ -11,7 +11,7 @@ class OptimalRain::Views::Index < Phlex::HTML
     render OptimalRain::Views::Layout.new do
       @pumps.each do |pump|
         volume = (pump.container_volume / OptimalRain::ML_PER_GAL).to_i
-        schedule = OptimalRain::NEXT_WATERING[:pins][pump.pin_number]
+        schedule = OptimalRain::PUMP[:pins][pump.pin_number][:schedule]
         if schedule.nil?
           p { "This cycle has ended, no future watering events." }
         elsif schedule.watering_event_start
