@@ -176,6 +176,10 @@ describe "Pump" do
     let(:override_start) { Time.now - (100 * OptimalRain::HOUR) }
     let(:pump) { OptimalRain::Pump.last }
 
+    after do
+      OptimalRain::PUMP[:pins][OptimalRain::Pump.last.pin_number].delete(:schedule)
+    end
+
     # rubocop:disable RSpec/ExampleLength
     it "has a next scheduled watering" do
       pump.schedule_next_watering
@@ -186,5 +190,15 @@ describe "Pump" do
       expect(next_watering_start).to be_within(1).of(twenty_hours_from_now)
     end
     # rubocop:enable RSpec/ExampleLength
+  end
+
+  context "when current phase has watering events" do
+    let(:override_start) { Time.now - 11 * OptimalRain::DAY }
+    let(:pump) { OptimalRain::Pump.last }
+    it "responds with a list of the day's watering events when asked" do
+      events_for_day = pump.events_for_day
+      expect(events_for_day.first)
+        .to be_within(1).of(Time.now + pump.active_phase.replenishment_offset)
+    end
   end
 end

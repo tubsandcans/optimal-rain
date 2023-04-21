@@ -27,50 +27,36 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
   end
 
   def active_phase(from: Time.now)
-    phase_start_offset = 0
     OptimalRain::ACTIVE_PHASE_SET.find do |phase|
-      phase.start_offset = phase_start_offset
-      phase_start_offset += phase.duration
       phase.include?(time: from, start: cycle_start)
     end
   end
 
   # schedule_next_watering - schedules the first watering event after :from (if any):
   def schedule_next_watering(from: Time.now)
+    # determine the active phase based on Pump.cycle_start and :from value, exit if none
     from = cycle_start if cycle_start > from
-    phase = active_phase(from: from) { from = _1 }
+    phase = active_phase(from: from)
     if phase.nil?
       OptimalRain::ACCESS_LOGGER.info "Cycle complete, done watering!"
       return
     end
 
-    # if phase has no events, next watering event must be in next phase.
-    if (phase.replenishment_events + phase.refreshment_events).zero?
-      offset = phase.start_offset + phase.duration
-      phase = OptimalRain::
-          ACTIVE_PHASE_SET[OptimalRain::ACTIVE_PHASE_SET.index(phase) + 1]
-      phase.start_offset = offset
-      from = cycle_start + offset
+    next_event = phase.next_event(cycle_start: cycle_start, from: from)
+    if next_event
+      add_watering_event(start_time: next_event, gallon_percentage: phase.volume)
     end
+  end
 
-    day_offset = ((from - (cycle_start + phase.start_offset)) / OptimalRain::DAY).to_i
-    # go over all phase's watering events (replenishment+refreshment), schedule the
-    # first one to occur after :from and return.
-    return if %w[replenishment refreshment].any? do |prefix|
-      first_watering_event = cycle_start + phase.start_offset +
-        phase.send("#{prefix}_offset") + (day_offset * OptimalRain::DAY)
-      phase.send("#{prefix}_events").times do |iter|
-        next_event = first_watering_event + (iter * phase.send("#{prefix}_interval"))
-        if next_event >= from
-          add_watering_event(start_time: next_event, gallon_percentage: phase.volume)
-          break true
-        end
-      end == true # event only got added if boolean true, not truthy-value
+  # return all day's events that occur after pump's next watering event, if any:
+  def events_for_day
+    phase = active_phase
+    if phase.nil?
+      OptimalRain::ACCESS_LOGGER.info "Cycle complete, done watering!"
+      return []
     end
-
-    # Active watering phase has no future or current watering event for today.
-    # make recursive call with :from set to tomorrow's light-on time:
-    schedule_next_watering(from: (cycle_start + phase.start_offset +
-        ((day_offset + 1) * OptimalRain::DAY)))
+    from = OptimalRain::PUMP[:pins][pin_number][:schedule]
+             &.watering_event_start || Time.now
+    phase.events_for_day(cycle_start: cycle_start, from: from)
   end
 end

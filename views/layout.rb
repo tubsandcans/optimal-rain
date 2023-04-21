@@ -26,6 +26,7 @@ class OptimalRain::Views::Layout < Phlex::HTML
       link rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
       link rel: "stylesheet", href: "3_main.css"
       script src: "https://cdn.jsdelivr.net/npm/flatpickr"
+      script src: "//unpkg.com/alpinejs", defer: true
       script src: "main.js"
       title { "Optimal Rain" }
     end

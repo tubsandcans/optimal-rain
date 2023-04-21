@@ -12,20 +12,33 @@ class OptimalRain::Views::Index < Phlex::HTML
       @pumps.each do |pump|
         volume = (pump.container_volume / OptimalRain::ML_PER_GAL).to_i
         schedule = OptimalRain::PUMP[:pins][pump.pin_number][:schedule]
+        other_waterings = pump.events_for_day.collect { _1.strftime("%I:%M %p") }.join(", ")
         if schedule.nil?
           p { "This cycle has ended, no future watering events." }
         elsif schedule.watering_event_start
-          p do
-            b(class: "mr-1") { "Next watering:" }
+          div "x-data": "{ open: false }", style: "margin-bottom:1.0rem" do
+            a href: "#", "x-on:click.prevent": "open = !open" do
+              b(class: "mr-1") { "Next watering:" }
+            end
             em do
               schedule.watering_event_start.strftime("%B %d %I:%M %p") +
                 " for #{schedule.duration_in_seconds.round} seconds " \
                 "(#{schedule.volume_in_ml}ml)"
             end
+            div "x-show": "open" do
+              unless other_waterings.empty?
+                plain(pump.events_for_day.collect { _1.strftime("%I:%M %p") }.join(", "))
+              end
+            end
           end
-          div style: "margin-bottom:1.0rem" do
-            b(class: "mr-1") { "Current phase:" }
+          div "x-data": "{ open: false }", style: "margin-bottom:1.0rem" do
+            a href: "#", "x-on:click.prevent": "open = !open" do
+              b(class: "mr-1") { "Current phase:" }
+            end
             em { pump.active_phase.name }
+            div "x-show": "open" do
+              "expanded content showing phase and cycle data"
+            end
           end
         end
         form id: "cycle_form", method: "POST", action: "/#{pump.id}" do
