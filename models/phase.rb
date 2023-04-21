@@ -77,6 +77,7 @@ module OptimalRain
       )
     end
 
+    # returns all watering event times for :from day to occur after :from time
     def events_for_day(cycle_start:, from:)
       day_offset = ((from - (cycle_start + start_offset)) / OptimalRain::DAY).to_i
       replenishment_events.times.collect do |iter|

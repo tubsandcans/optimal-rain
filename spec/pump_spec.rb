@@ -195,6 +195,7 @@ describe "Pump" do
   context "when current phase has watering events" do
     let(:override_start) { Time.now - 11 * OptimalRain::DAY }
     let(:pump) { OptimalRain::Pump.last }
+
     it "responds with a list of the day's watering events when asked" do
       events_for_day = pump.events_for_day
       expect(events_for_day.first)
