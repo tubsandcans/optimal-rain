@@ -14,6 +14,7 @@ describe "App" do
 
   it "renders a new cycle form" do
     visit "/"
-    expect(page).to have_selector("form#new_cycle_form")
+    expect(page)
+      .to have_selector("form#pin_#{OptimalRain::PUMP[:pins].keys.first}_cycle_form")
   end
 end
