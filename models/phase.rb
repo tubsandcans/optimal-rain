@@ -38,23 +38,9 @@ module OptimalRain
     )
 
     # include? - determines if this phase is inclusive of :time based on :cycle_start
-    def include?(time:, start:)
-      adjusted_start = start
-      adjusted_start += start_offset unless start_offset.zero?
+    def include?(cycle_start:, time: ::Time.now)
+      adjusted_start = start(cycle_start: cycle_start)
       (adjusted_start..(adjusted_start + duration)).cover? time
-    end
-
-    def calculate_start_time(cycle_start:, from:)
-      day_offset = ((from - (cycle_start + start_offset)) / OptimalRain::DAY).to_i
-      %w[replenishment refreshment].each do |prefix|
-        first_watering_event = cycle_start + start_offset + send("#{prefix}_offset")
-        send("#{prefix}_events").times do |iter|
-          event = first_watering_event + (iter * send("#{prefix}_interval"))
-          event += (day_offset * OptimalRain::DAY) if day_offset > 0
-          return event if event >= from
-        end
-      end
-      nil
     end
 
     # return the next watering event's start-time (after :from)
@@ -70,35 +56,51 @@ module OptimalRain
 
       # Active watering phase has no future or current watering event for today.
       # make recursive call with :from set to tomorrow's light-on time:
-      day_offset = ((from - (cycle_start + start_offset)) / OptimalRain::DAY).to_i
       next_event(
         cycle_start: cycle_start,
-        from: (cycle_start + start_offset + ((day_offset + 1) * OptimalRain::DAY))
+        from: start(cycle_start: cycle_start, from: from + OptimalRain::DAY)
       )
     end
 
     # returns all watering event times for :from day to occur after :from time
     def events_for_day(cycle_start:, from:)
-      day_offset = ((from - (cycle_start + start_offset)) / OptimalRain::DAY).to_i
       replenishment_events.times.collect do |iter|
-        cycle_start + start_offset + replenishment_offset +
-          (day_offset * OptimalRain::DAY) + (iter * replenishment_interval)
+        start(cycle_start: cycle_start, from: from) + replenishment_offset +
+          (iter * replenishment_interval)
       end.concat(
         refreshment_events.times.collect do |iter|
-          cycle_start + start_offset + refreshment_offset +
-            (day_offset * OptimalRain::DAY) + (iter * refreshment_interval)
+          start(cycle_start: cycle_start, from: from) + refreshment_offset +
+            (iter * refreshment_interval)
         end
       ).filter { _1 > from }
     end
 
     private
 
-    # calculate this phase's start relative to the start of its phase_set:
-    def start_offset
-      @offset ||= OptimalRain::ACTIVE_PHASE_SET.reduce(0) do |off, phase|
-        break off if phase.name == name
-        off + phase.duration
+    def calculate_start_time(cycle_start:, from:)
+      %w[replenishment refreshment].each do |prefix|
+        first_watering_event = start(cycle_start: cycle_start, from: from) +
+          send("#{prefix}_offset")
+        send("#{prefix}_events").times do |iter|
+          event = first_watering_event + (iter * send("#{prefix}_interval"))
+          return event if event >= from
+        end
       end
+      nil
+    end
+
+    # calculate this phase's start:
+    def start(cycle_start:, from: nil)
+      offset = cycle_start + OptimalRain::ACTIVE_PHASE_SET.reduce(0) do |off, phase|
+                               break off if phase.name == name
+                               off + phase.duration
+                             end
+      if from
+        day_offset = ((from - offset) / OptimalRain::DAY).to_i * OptimalRain::DAY
+        offset += day_offset if day_offset > 0
+      end
+
+      offset
     end
   end
 end

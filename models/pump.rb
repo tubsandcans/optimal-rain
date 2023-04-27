@@ -28,7 +28,7 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
 
   def active_phase(from: Time.now)
     OptimalRain::ACTIVE_PHASE_SET.find do |phase|
-      phase.include?(time: from, start: cycle_start)
+      phase.include?(time: from, cycle_start: cycle_start)
     end
   end
 
