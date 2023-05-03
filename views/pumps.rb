@@ -32,12 +32,15 @@ class OptimalRain::Views::Pumps < Phlex::HTML
           a href: "#", "x-on:click.prevent": "open = !open" do
             b(class: "mr-1") { "Current phase:" }
           end
-          em { pump.active_phase.name }
+          em { pump.active_phase&.name || "None" }
           div "x-show": "open" do
             OptimalRain::ACTIVE_PHASE_SET&.each do |phase|
               div style: "margin-top: 0.5rem" do
                 if phase.include?(cycle_start: pump.cycle_start)
-                  b { "#{phase.name}, #{((Time.now - pump.cycle_start) / OptimalRain::DAY).round} days elapsed" }
+                  b do
+                    "#{phase.name}, day #{((Time.now - pump.cycle_start) /
+                      OptimalRain::DAY).round}"
+                  end
                 else
                   plain(phase.name)
                 end
