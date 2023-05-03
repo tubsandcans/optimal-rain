@@ -98,9 +98,12 @@ describe "Pump" do
     let(:override_start) { nil }
     let(:pump) { OptimalRain::Pump.last }
 
-    it "is all out of watering events" do
+    before do
       pump.cycle_start = start_time - (65 * OptimalRain::DAY)
       pump.schedule_next_watering
+    end
+
+    it "is all out of watering events" do
       expect(OptimalRain::PUMP[:pins][pump.pin_number][:schedule]).to be_nil
     end
   end
@@ -109,12 +112,15 @@ describe "Pump" do
     let(:override_start) { Time.now + 2 * OptimalRain::DAY }
     let(:pump) { OptimalRain::Pump.last }
 
+    before do
+      pump.schedule_next_watering
+    end
+
     after do
       OptimalRain::PUMP[:pins][OptimalRain::Pump.last.pin_number].delete(:schedule)
     end
 
     it "schedules the first watering event 5 days from cycle-start" do
-      pump.schedule_next_watering
       first_watering_start = OptimalRain::PUMP[:pins][pump.pin_number][:schedule]
                                &.scheduler&.jobs&.first&.original
       expect(first_watering_start).to be_within(1).of(first_watering)
@@ -125,12 +131,15 @@ describe "Pump" do
     let(:override_start) { Time.now - 11 * OptimalRain::DAY }
     let(:pump) { OptimalRain::Pump.last }
 
+    before do
+      pump.schedule_next_watering
+    end
+
     after do
       OptimalRain::PUMP[:pins][OptimalRain::Pump.last.pin_number].delete(:schedule)
     end
 
     it "schedules the next watering event 2 hours from light-on time" do
-      pump.schedule_next_watering
       next_watering_start = OptimalRain::PUMP[:pins][pump.pin_number][:schedule]
                               &.scheduler&.jobs&.first&.original
       expect(next_watering_start).to be_within(2 * OptimalRain::HOUR).of(Time.now)
@@ -141,12 +150,15 @@ describe "Pump" do
     let(:override_start) { Time.now - 21 * OptimalRain::DAY }
     let(:pump) { OptimalRain::Pump.last }
 
+    before do
+      pump.schedule_next_watering
+    end
+
     after do
       OptimalRain::PUMP[:pins][OptimalRain::Pump.last.pin_number].delete(:schedule)
     end
 
     it "schedules the next watering event 1 hour from light-on time" do
-      pump.schedule_next_watering
       next_watering_start = OptimalRain::PUMP[:pins][pump.pin_number][:schedule]
                               &.scheduler&.jobs&.first&.original
       expect(next_watering_start).to be_within(OptimalRain::HOUR).of(Time.now)
@@ -157,12 +169,15 @@ describe "Pump" do
     let(:override_start) { Time.now - ((30 * OptimalRain::DAY) + (140 * 60)) }
     let(:pump) { OptimalRain::Pump.last }
 
+    before do
+      pump.schedule_next_watering
+    end
+
     after do
       OptimalRain::PUMP[:pins][OptimalRain::Pump.last.pin_number].delete(:schedule)
     end
 
     it "schedules a vegetative watering in 20 minutes" do
-      pump.schedule_next_watering
       next_watering_start = OptimalRain::PUMP[:pins][pump.pin_number][:schedule]
                               &.scheduler&.jobs&.first&.original
       expect(next_watering_start).to be_within(440 * 60).of(Time.now)
@@ -175,21 +190,22 @@ describe "Pump" do
   context "when current time within the cycle is in-between phases" do
     let(:override_start) { Time.now - (100 * OptimalRain::HOUR) }
     let(:pump) { OptimalRain::Pump.last }
+    let(:twenty_hours_from_now) { Time.now + OptimalRain::DAY - 4 * OptimalRain::HOUR }
+
+    before do
+      pump.schedule_next_watering
+    end
 
     after do
       OptimalRain::PUMP[:pins][OptimalRain::Pump.last.pin_number].delete(:schedule)
     end
 
-    # rubocop:disable RSpec/ExampleLength
     it "has a next scheduled watering" do
-      pump.schedule_next_watering
       next_watering_start = OptimalRain::PUMP[:pins][pump.pin_number][:schedule]
                               &.scheduler&.jobs&.first&.original
       # next_watering_start should occur 20 hours from now
-      twenty_hours_from_now = Time.now + OptimalRain::DAY - (4 * OptimalRain::HOUR)
       expect(next_watering_start).to be_within(1).of(twenty_hours_from_now)
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 
   context "when current phase has watering events" do
