@@ -37,10 +37,8 @@ class OptimalRain::Views::Pumps < Phlex::HTML
             OptimalRain::ACTIVE_PHASE_SET&.each do |phase|
               div style: "margin-top: 0.5rem" do
                 if phase.include?(cycle_start: pump.cycle_start)
-                  b do
-                    "#{phase.name}, day #{((Time.now - pump.cycle_start) /
-                      OptimalRain::DAY).round}"
-                  end
+                  day = 1 + ((Time.now - pump.cycle_start) / OptimalRain::DAY).floor
+                  b { "#{phase.name}, day #{day}" }
                 else
                   plain(phase.name)
                 end
