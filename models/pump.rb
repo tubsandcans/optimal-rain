@@ -50,13 +50,14 @@ class OptimalRain::Pump < Sequel::Model(:pumps)
 
   # return all day's events that occur after pump's next watering event, if any:
   def events_for_day
-    phase = active_phase
+    from = OptimalRain::PUMP[:pins][pin_number][:schedule]
+             &.watering_event_start || Time.now
+    phase = active_phase(from: from + 1)
     if phase.nil?
       OptimalRain::ACCESS_LOGGER.info "Cycle complete, done watering!"
       return []
     end
-    from = OptimalRain::PUMP[:pins][pin_number][:schedule]
-             &.watering_event_start || Time.now
+
     phase.events_for_day(cycle_start: cycle_start, from: from)
   end
 end
